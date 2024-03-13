@@ -380,6 +380,75 @@ namespace Graphics
                0.35f,0.82f,0.0f,
                139f/255f, 69f/255f, 19f/255f,
 
+               //belt
+               0.45f, -0.055f , 0.0f,
+               128f/255f,128f/255f,128f/255f,
+               -0.11f , -0.055f , 0.0f,
+               128f/255f,128f/255f,128f/255f,
+               -0.11f,-0.17f,0.0f,
+               128f/255f,128f/255f,128f/255f,
+                -0.11f,-0.17f,0.0f,
+               128f/255f,128f/255f,128f/255f,
+               0.45f,-0.17f,0.0f,
+               128f/255f,128f/255f,128f/255f,
+               0.45f, -0.055f , 0.0f,
+               128f/255f,128f/255f,128f/255f,
+
+               //right jeans leg
+               0.45f,-0.17f,0.0f,
+               0.0f,0.0f,205f/255f,
+               0.17f,-0.17f,0.0f,
+               0.0f,0.0f,205f/255f,
+               0.17f,-0.65f,0.0f,
+               0.0f,0.0f,205f/255f,
+               0.17f,-0.65f,0.0f,
+               0.0f,0.0f,205f/255f,
+               0.45f, -0.65f,0.0f,
+               0.0f,0.0f,205f/255f,
+               0.45f,-0.17f,0.0f,
+               0.0f,0.0f,205f/255f,
+
+               //left jeans leg
+               0.17f,-0.17f,0.0f,
+               0.0f,0.0f,205f/255f,
+               -0.11f,-0.17f,0.0f,
+               0.0f,0.0f,205f/255f,
+               -0.11f,-0.65f,0.0f,
+               0.0f,0.0f,205f/255f,
+               -0.11f,-0.65f,0.0f,
+               0.0f,0.0f,205f/255f,
+               0.17f,-0.65f,0.0f,
+               0.0f,0.0f,205f/255f,
+               0.17f,-0.17f,0.0f,
+               0.0f,0.0f,205f/255f,
+
+               //right foot
+               0.40f,-0.65f,0.0f,
+               139f/255f,0.0f,0.0f,
+               0.22f,-0.65f,0.0f,
+               139f/255f,0.0f,0.0f,
+               0.22f,-0.75f,0.0f,
+               139f/255f,0.0f,0.0f,
+               0.22f,-0.75f,0.0f,
+               139f/255f,0.0f,0.0f,
+               0.40f,-0.75f,0.0f,
+               139f/255f,0.0f,0.0f,
+               0.40f,-0.65f,0.0f,
+               139f/255f,0.0f,0.0f,
+
+               //left foot
+               0.10f,-0.65f,0.0f,
+               139f/255f,0.0f,0.0f,
+               -0.07f,-0.65f,0.0f,
+               139f/255f,0.0f,0.0f,
+               -0.07f,-0.75f,0.0f,
+               139f/255f,0.0f,0.0f,
+               -0.07f,-0.75f,0.0f,
+               139f/255f,0.0f,0.0f,
+               0.10f,-0.75f,0.0f,
+               139f/255f,0.0f,0.0f,
+               0.10f,-0.65f,0.0f,
+               139f/255f,0.0f,0.0f
             };
 
             
@@ -440,6 +509,21 @@ namespace Graphics
 
             //hair
             Gl.glDrawArrays(Gl.GL_TRIANGLES, 151, 9);
+
+            //belt
+            Gl.glDrawArrays(Gl.GL_TRIANGLES, 160, 6);
+
+            //right jeans leg
+            Gl.glDrawArrays(Gl.GL_TRIANGLES, 166, 6);
+
+            //left jeans leg
+            Gl.glDrawArrays(Gl.GL_TRIANGLES, 172 , 6);
+
+            //right foot
+            Gl.glDrawArrays(Gl.GL_TRIANGLES, 178 , 6);
+
+            //left foot
+            Gl.glDrawArrays(Gl.GL_TRIANGLES, 184, 6);
 
             Gl.glDisableVertexAttribArray(1);
             Gl.glDisableVertexAttribArray(0);
