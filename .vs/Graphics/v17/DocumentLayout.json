@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "F:\\Year 3 2nd term\\Computer Graphics\\Assignment\\Graphics-project\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F6600EA5-A7B0-425A-96E0-2448C6053140}|Graphics\\Graphics.csproj|F:\\Year 3 2nd term\\Computer Graphics\\Assignment\\Graphics-project\\graphics\\renderer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F6600EA5-A7B0-425A-96E0-2448C6053140}|Graphics\\Graphics.csproj|f:\\year 3 2nd term\\computer graphics\\assignment\\graphics-project\\graphics\\renderer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F6600EA5-A7B0-425A-96E0-2448C6053140}|Graphics\\Graphics.csproj|solutionrelative:graphics\\renderer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F6600EA5-A7B0-425A-96E0-2448C6053140}|Graphics\\Graphics.csproj|f:\\year 3 2nd term\\computer graphics\\assignment\\graphics-project\\graphics\\graphicsform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F6600EA5-A7B0-425A-96E0-2448C6053140}|Graphics\\Graphics.csproj|solutionrelative:graphics\\graphicsform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F6600EA5-A7B0-425A-96E0-2448C6053140}|Graphics\\Graphics.csproj|f:\\year 3 2nd term\\computer graphics\\assignment\\graphics-project\\graphics\\shaders\\simplevertexshader.vertexshader||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{F6600EA5-A7B0-425A-96E0-2448C6053140}|Graphics\\Graphics.csproj|solutionrelative:graphics\\shaders\\simplevertexshader.vertexshader||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6600EA5-A7B0-425A-96E0-2448C6053140}|Graphics\\Graphics.csproj|f:\\year 3 2nd term\\computer graphics\\assignment\\graphics-project\\graphics\\shaders\\simplefragmentshader.fragmentshader||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{F6600EA5-A7B0-425A-96E0-2448C6053140}|Graphics\\Graphics.csproj|solutionrelative:graphics\\shaders\\simplefragmentshader.fragmentshader||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -27,14 +31,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "GraphicsForm.Designer.cs",
-              "DocumentMoniker": "F:\\Year 3 2nd term\\Computer Graphics\\Assignment\\Graphics-project\\Graphics\\GraphicsForm.Designer.cs",
-              "RelativeDocumentMoniker": "Graphics\\GraphicsForm.Designer.cs",
-              "ToolTip": "F:\\Year 3 2nd term\\Computer Graphics\\Assignment\\Graphics-project\\Graphics\\GraphicsForm.Designer.cs",
-              "RelativeToolTip": "Graphics\\GraphicsForm.Designer.cs",
-              "ViewState": "AQIAADAAAAAAAAAAAAAYwDkAAAA5AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-11T13:13:29.127Z",
+              "Title": "SimpleVertexShader.vertexshader",
+              "DocumentMoniker": "F:\\Year 3 2nd term\\Computer Graphics\\Assignment\\Graphics-project\\Graphics\\Shaders\\SimpleVertexShader.vertexshader",
+              "RelativeDocumentMoniker": "Graphics\\Shaders\\SimpleVertexShader.vertexshader",
+              "ToolTip": "F:\\Year 3 2nd term\\Computer Graphics\\Assignment\\Graphics-project\\Graphics\\Shaders\\SimpleVertexShader.vertexshader",
+              "RelativeToolTip": "Graphics\\Shaders\\SimpleVertexShader.vertexshader",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-03-13T10:06:10.181Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SimpleFragmentShader.fragmentshader",
+              "DocumentMoniker": "F:\\Year 3 2nd term\\Computer Graphics\\Assignment\\Graphics-project\\Graphics\\Shaders\\SimpleFragmentShader.fragmentshader",
+              "RelativeDocumentMoniker": "Graphics\\Shaders\\SimpleFragmentShader.fragmentshader",
+              "ToolTip": "F:\\Year 3 2nd term\\Computer Graphics\\Assignment\\Graphics-project\\Graphics\\Shaders\\SimpleFragmentShader.fragmentshader",
+              "RelativeToolTip": "Graphics\\Shaders\\SimpleFragmentShader.fragmentshader",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAASAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-03-13T10:06:09.481Z",
               "EditorCaption": ""
             },
             {
@@ -45,7 +62,7 @@
               "RelativeDocumentMoniker": "Graphics\\Renderer.cs",
               "ToolTip": "F:\\Year 3 2nd term\\Computer Graphics\\Assignment\\Graphics-project\\Graphics\\Renderer.cs",
               "RelativeToolTip": "Graphics\\Renderer.cs",
-              "ViewState": "AQIAABwAAAAAAAAAAAAQwB0AAAAbAAAA",
+              "ViewState": "AQIAADMAAAAAAAAAAAAAAEcAAAAbAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-11T11:31:32.735Z",
               "EditorCaption": ""
