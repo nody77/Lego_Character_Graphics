@@ -27,11 +27,11 @@ namespace Graphics
                 projectPath + "\\Shaders\\SimpleFragmentShader.fragmentshader");
             
             Gl.glClearColor(0.5f, 0.87f, 0.91f, 1);
-            
+
             float[] points =
             {
                 // right hand of shirt
-               0.54f , 0.29f , 0.0f, 
+               0.54f , 0.29f , 0.0f,
                0.0f , 0.611f , 0.0392f,
                0.45f , 0.29f , 0.0f,
                0.0f , 0.611f , 0.0392f,
@@ -344,10 +344,41 @@ namespace Graphics
                0.360f,0.39f,0.0f,
                255f/255f, 204f/255f, 115f/255f,
                0.35f,0.38f,0.0f,
-               255f/255f, 204f/255f, 115f/255f
+               255f/255f, 204f/255f, 115f/255f,
+
+               //eyes
+               0.09f , 0.65f, 0.0f,
+               0.0f , 0.0f , 0.0f,
+               0.25f , 0.65f , 0.0f,
+               0.0f , 0.0f , 0.0f,
+
+               //mouth
+               0.125f , 0.50f, 0.0f,
+               0.0f , 0.0f , 0.0f,
+               0.175f,0.45f,0.0f,
+               0.0f,0.0f,0.0f,
+               0.25f , 0.50f , 0.0f,
+               0.0f , 0.0f , 0.0f,
 
                //hair
-
+               0.01f,0.82f,0.0f,
+               139f/255f, 69f/255f, 19f/255f,
+               0.1f,0.9f,0.0f,
+               139f/255f, 69f/255f, 19f/255f,
+               0.150f,0.82f,0.0f,
+               139f/255f, 69f/255f, 19f/255f,
+               0.150f,0.82f,0.0f,
+               139f/255f, 69f/255f, 19f/255f,
+               0.200f,0.9f,0.0f,
+               139f/255f, 69f/255f, 19f/255f,
+               0.250f,0.82f,0.0f,
+               139f/255f, 69f/255f, 19f/255f,
+               0.250f,0.82f,0.0f,
+               139f/255f, 69f/255f, 19f/255f,
+               0.300f,0.9f,0.0f,
+               139f/255f, 69f/255f, 19f/255f,
+               0.35f,0.82f,0.0f,
+               139f/255f, 69f/255f, 19f/255f,
 
             };
 
@@ -399,6 +430,16 @@ namespace Graphics
 
             //right part of head
             Gl.glDrawArrays(Gl.GL_TRIANGLE_FAN, 100, 46);
+
+            //eyes
+            Gl.glPointSize(10);
+            Gl.glDrawArrays(Gl.GL_POINTS, 146, 2);
+
+            //mouth
+            Gl.glDrawArrays(Gl.GL_LINE_LOOP, 148, 3);
+
+            //hair
+            Gl.glDrawArrays(Gl.GL_TRIANGLES, 151, 9);
 
             Gl.glDisableVertexAttribArray(1);
             Gl.glDisableVertexAttribArray(0);
