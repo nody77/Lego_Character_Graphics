@@ -101,7 +101,46 @@ namespace Graphics
                255f, 255f, 255f,
 
                //Left Shirt
+               0.09f,0.38f,0.0f,
+               0.0f , 0.611f , 0.0392f,
+               -0.11f , 0.38f , 0.0f,
+               0.0f , 0.611f , 0.0392f,
+               -0.11f , -0.055f , 0.0f,
+               0.0f , 0.611f , 0.0392f,
+               -0.11f , -0.055f , 0.0f,
+               0.0f , 0.611f , 0.0392f,
+               0.09f,-0.055f,0.0f,
+               0.0f , 0.611f , 0.0392f,
+               0.09f,0.38f,0.0f,
+               0.0f , 0.611f , 0.0392f,
 
+               //left hand of shirt
+               -0.11f,0.29f,0.0f,
+               0.0f , 0.611f , 0.0392f,
+               -0.2f,0.29f,0.0f,
+               0.0f , 0.611f , 0.0392f,
+               -0.2f,0.06f,0.0f,
+               0.0f , 0.611f , 0.0392f,
+               -0.2f,0.06f,0.0f,
+               0.0f , 0.611f , 0.0392f,
+               -0.11f,0.06f,0.0f,
+               0.0f , 0.611f , 0.0392f,
+               -0.11f,0.29f,0.0f,
+               0.0f , 0.611f , 0.0392f,
+
+               //left hand
+               -0.11f,0.06f,0.0f,
+               255f/255f, 204f/255f, 115f/255f,
+               -0.2f,0.06f,0.0f,
+               255f/255f, 204f/255f, 115f/255f,
+               -0.2f,-0.17f,0.0f,
+               255f/255f, 204f/255f, 115f/255f,
+               -0.2f,-0.17f,0.0f,
+               255f/255f, 204f/255f, 115f/255f,
+               -0.11f,-0.17f,0.0f,
+               255f/255f, 204f/255f, 115f/255f,
+               -0.11f,0.06f,0.0f,
+               255f/255f, 204f/255f, 115f/255f,
             };
 
             
@@ -133,6 +172,15 @@ namespace Graphics
 
             //Top
             Gl.glDrawArrays(Gl.GL_TRIANGLES, 24, 6);
+
+            //Left Shirt
+            Gl.glDrawArrays(Gl.GL_TRIANGLES, 30, 6);
+
+            //Left hand of the shirt
+            Gl.glDrawArrays(Gl.GL_TRIANGLES, 36, 6);
+
+            //left hand
+            Gl.glDrawArrays(Gl.GL_TRIANGLES, 42, 6);
 
             Gl.glDisableVertexAttribArray(1);
             Gl.glDisableVertexAttribArray(0);
