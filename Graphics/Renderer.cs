@@ -546,6 +546,18 @@ namespace Graphics
                -0.11f,-0.65f,0.0f,
                0.0f,11f/255f,112f/255f,
                0.17f,-0.65f,0.0f,
+               0.0f,11f/255f,112f/255f,
+               0.45f,-0.17f,0.0f,
+               0.0f,11f/255f,112f/255f,
+               0.17f,-0.17f,0.0f,
+               0.0f,11f/255f,112f/255f,
+               0.45f,-0.17f,0.0f,
+               0.0f,11f/255f,112f/255f,
+               0.45f, -0.65f,0.0f,
+               0.0f,11f/255f,112f/255f,
+               0.45f, -0.65f,0.0f,
+               0.0f,11f/255f,112f/255f,
+               0.17f,-0.65f,0.0f,
                0.0f,11f/255f,112f/255f
             };
 
@@ -624,7 +636,7 @@ namespace Graphics
             Gl.glDrawArrays(Gl.GL_TRIANGLES, 184, 6);
 
             //Lines
-            Gl.glDrawArrays(Gl.GL_LINES, 190 , 48);
+            Gl.glDrawArrays(Gl.GL_LINES, 190 , 54);
 
             Gl.glDisableVertexAttribArray(1);
             Gl.glDisableVertexAttribArray(0);
