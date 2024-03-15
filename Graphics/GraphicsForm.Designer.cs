@@ -41,23 +41,19 @@
             this.simpleOpenGlControl1.BackColor = System.Drawing.Color.Black;
             this.simpleOpenGlControl1.ColorBits = ((byte)(32));
             this.simpleOpenGlControl1.DepthBits = ((byte)(16));
-            this.simpleOpenGlControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.simpleOpenGlControl1.Location = new System.Drawing.Point(0, 0);
-            this.simpleOpenGlControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.simpleOpenGlControl1.Name = "simpleOpenGlControl1";
-            this.simpleOpenGlControl1.Size = new System.Drawing.Size(861, 549);
+            this.simpleOpenGlControl1.Size = new System.Drawing.Size(765, 439);
             this.simpleOpenGlControl1.StencilBits = ((byte)(0));
             this.simpleOpenGlControl1.TabIndex = 0;
-            this.simpleOpenGlControl1.Load += new System.EventHandler(this.simpleOpenGlControl1_Load);
             this.simpleOpenGlControl1.Paint += new System.Windows.Forms.PaintEventHandler(this.simpleOpenGlControl1_Paint);
             // 
             // GraphicsForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(861, 549);
+            this.ClientSize = new System.Drawing.Size(767, 439);
             this.Controls.Add(this.simpleOpenGlControl1);
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "GraphicsForm";
             this.Text = "Graphics";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GraphicsForm_FormClosing);

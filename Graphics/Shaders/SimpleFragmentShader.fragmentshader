@@ -1,11 +1,10 @@
 #version 330 core
 
 // Ouput data
-in vec3 theColor;
 out vec3 color;
-
+in vec3 pixelcolor;
 void main()
 {
-	color = theColor;
-}
+	color = pixelcolor;
 
+}

@@ -1,17 +1,15 @@
-﻿/*
-    Nada Ahmed Fathalla
-    2021170580
-    CS
-    Section 7
-*/
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Tao.OpenGl;
+using GlmNet;
+//include GLM library
+
+
+using System.IO;
 
 namespace Graphics
 {
@@ -19,18 +17,21 @@ namespace Graphics
     {
         Shader sh;
         uint vertexBufferID;
-        
+
+        //3D Drawing
+        mat4 m;
+        mat4 v;
+        mat4 p;
+        mat4 mvp;
+        int MVP_ID;
         public void Initialize()
         {
             string projectPath = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
-            sh = new Shader(projectPath + "\\Shaders\\SimpleVertexShader.vertexshader",
-                projectPath + "\\Shaders\\SimpleFragmentShader.fragmentshader");
-            
+            sh = new Shader(projectPath + "\\Shaders\\SimpleVertexShader.vertexshader", projectPath + "\\Shaders\\SimpleFragmentShader.fragmentshader");
             Gl.glClearColor(0.5f, 0.87f, 0.91f, 1);
-
-            float[] points =
-            {
-               // right hand of shirt
+            float[] verts =
+            { 
+		       //right hand of shirt
                0.54f , 0.29f , 0.0f,
                0.0f , 0.611f , 0.0392f,
                0.45f , 0.29f , 0.0f,
@@ -42,6 +43,71 @@ namespace Graphics
                0.54f , 0.06f , 0.0f,
                0.0f , 0.611f , 0.0392f,
                0.54f , 0.29f , 0.0f,
+               0.0f , 0.611f , 0.0392f,
+
+               0.54f , 0.29f , -0.1f,
+               0.0f , 0.611f , 0.0392f,
+               0.45f , 0.29f , -0.1f,
+               0.0f , 0.611f , 0.0392f,
+               0.45f , 0.29f , 0.0f,
+               0.0f , 0.611f , 0.0392f,
+               0.45f , 0.29f , 0.0f,
+               0.0f , 0.611f , 0.0392f,
+               0.54f , 0.29f , 0.0f,
+               0.0f , 0.611f , 0.0392f,
+               0.54f , 0.29f , -0.1f,
+               0.0f , 0.611f , 0.0392f,
+
+               0.45f , 0.29f , -0.1f,
+               0.0f , 0.611f , 0.0392f,
+               0.45f , 0.29f , 0.0f,
+               0.0f , 0.611f , 0.0392f,
+               0.45f , 0.06f , 0.0f,
+               0.0f , 0.611f , 0.0392f,
+               0.45f , 0.06f , 0.0f,
+               0.0f , 0.611f , 0.0392f,
+               0.45f , 0.06f , -0.1f,
+               0.0f , 0.611f , 0.0392f,
+               0.45f , 0.29f , -0.1f,
+               0.0f , 0.611f , 0.0392f,
+
+               0.54f , 0.06f , -0.1f,
+               0.0f , 0.611f , 0.0392f,
+               0.45f , 0.06f , -0.1f,
+               0.0f , 0.611f , 0.0392f,
+               0.45f , 0.06f , 0.0f,
+               0.0f , 0.611f , 0.0392f,
+               0.45f , 0.06f , 0.0f,
+               0.0f , 0.611f , 0.0392f,
+               0.54f , 0.06f , 0.0f,
+               0.0f , 0.611f , 0.0392f,
+               0.54f , 0.06f , -0.1f,
+               0.0f , 0.611f , 0.0392f,
+
+               0.54f , 0.29f , -0.1f,
+               0.0f , 0.611f , 0.0392f,
+               0.45f , 0.29f , -0.1f,
+               0.0f , 0.611f , 0.0392f,
+               0.45f , 0.06f , -0.1f,
+               0.0f , 0.611f , 0.0392f,
+               0.45f , 0.06f , -0.1f,
+               0.0f , 0.611f , 0.0392f,
+               0.54f , 0.06f , -0.1f,
+               0.0f , 0.611f , 0.0392f,
+               0.54f , 0.29f , -0.1f,
+               0.0f , 0.611f , 0.0392f,
+
+               0.54f , 0.29f , -0.1f,
+               0.0f , 0.611f , 0.0392f,
+               0.54f , 0.29f , 0.0f,
+               0.0f , 0.611f , 0.0392f,
+               0.54f , 0.06f , 0.0f,
+               0.0f , 0.611f , 0.0392f,
+               0.54f , 0.06f , 0.0f,
+               0.0f , 0.611f , 0.0392f,
+               0.54f , 0.06f , -0.1f,
+               0.0f , 0.611f , 0.0392f,
+               0.54f , 0.29f , -0.1f,
                0.0f , 0.611f , 0.0392f,
 
                //right hand
@@ -58,35 +124,231 @@ namespace Graphics
                0.45f,0.06f,0.0f,
                255f/255f, 204f/255f, 115f/255f,
 
+               0.54f,0.06f,-0.1f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.45f,0.06f,-0.1f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.45f,0.06f,0.0f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.45f,0.06f,0.0f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.54f,0.06f,0.0f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.54f,0.06f,-0.1f,
+               255f/255f, 204f/255f, 115f/255f,
+
+               0.45f,0.06f,-0.1f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.45f,0.06f,0.0f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.54f,-0.17f,0.0f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.54f,-0.17f,0.0f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.54f,-0.17f,-0.1f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.45f,0.06f,-0.1f,
+               255f/255f, 204f/255f, 115f/255f,
+
+               0.54f,0.06f,-0.1f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.45f,0.06f,-0.1f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.45f,-0.17f,-0.1f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.45f,-0.17f,-0.1f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.54f,-0.17f,-0.1f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.54f,0.06f,-0.1f,
+               255f/255f, 204f/255f, 115f/255f,
+
+               0.54f,-0.17f,-0.1f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.45f,-0.17f,-0.1f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.45f,-0.17f,0.0f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.45f,-0.17f,0.0f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.54f,-0.17f,0.0f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.54f,-0.17f,-0.1f,
+               255f/255f, 204f/255f, 115f/255f,
+
+               0.54f,0.06f,-0.1f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.54f,0.06f,0.0f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.54f,-0.17f,0.0f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.54f,-0.17f,0.0f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.54f,-0.17f,-0.1f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.54f,0.06f,-0.1f,
+               255f/255f, 204f/255f, 115f/255f,
+
                //right shirt
-               0.45f , 0.38f,0.0f,
+               0.45f , 0.38f,0.15f,
                0.0f , 0.611f , 0.0392f,
-               0.25f , 0.38f , 0.0f,
+               0.25f , 0.38f , 0.15f,
                0.0f , 0.611f , 0.0392f,
-               0.25f, -0.055f , 0.0f,
+               0.25f, -0.055f , 0.15f,
                0.0f , 0.611f , 0.0392f,
-               0.25f, -0.055f , 0.0f,
+               0.25f, -0.055f , 0.15f,
                0.0f , 0.611f , 0.0392f,
-               0.45f, -0.055f , 0.0f,
+               0.45f, -0.055f , 0.15f,
                0.0f , 0.611f , 0.0392f,
-               0.45f , 0.38f,0.0f,
+               0.45f , 0.38f,0.15f,
+               0.0f , 0.611f , 0.0392f,
+
+               0.45f , 0.38f,-0.25f,
+               0.0f , 0.611f , 0.0392f,
+               0.25f , 0.38f , -0.25f,
+               0.0f , 0.611f , 0.0392f,
+               0.25f , 0.38f , 0.15f,
+               0.0f , 0.611f , 0.0392f,
+               0.25f , 0.38f , 0.15f,
+               0.0f , 0.611f , 0.0392f,
+               0.45f , 0.38f,0.15f,
+               0.0f , 0.611f , 0.0392f,
+               0.45f , 0.38f,-0.25f,
+               0.0f , 0.611f , 0.0392f,
+
+               0.25f , 0.38f , -0.25f,
+               0.0f , 0.611f , 0.0392f,
+               0.25f , 0.38f , 0.15f,
+               0.0f , 0.611f , 0.0392f,
+               0.25f, -0.055f , 0.15f,
+               0.0f , 0.611f , 0.0392f,
+               0.25f, -0.055f , 0.15f,
+               0.0f , 0.611f , 0.0392f,
+               0.25f, -0.055f , -0.25f,
+               0.0f , 0.611f , 0.0392f,
+               0.25f , 0.38f , -0.25f,
+               0.0f , 0.611f , 0.0392f,
+
+               0.45f , 0.38f,-0.25f,
+               0.0f , 0.611f , 0.0392f,
+               0.25f , 0.38f , -0.25f,
+               0.0f , 0.611f , 0.0392f,
+               0.25f, -0.055f , -0.25f,
+               0.0f , 0.611f , 0.0392f,
+               0.25f, -0.055f , -0.25f,
+               0.0f , 0.611f , 0.0392f,
+               0.45f, -0.055f , -0.25f,
+               0.0f , 0.611f , 0.0392f,
+               0.45f , 0.38f,-0.25f,
+               0.0f , 0.611f , 0.0392f,
+
+               0.45f, -0.055f , -0.25f,
+               0.0f , 0.611f , 0.0392f,
+               0.25f, -0.055f , -0.25f,
+               0.0f , 0.611f , 0.0392f,
+               0.25f, -0.055f , 0.15f,
+               0.0f , 0.611f , 0.0392f,
+               0.25f, -0.055f , 0.15f,
+               0.0f , 0.611f , 0.0392f,
+               0.45f, -0.055f , 0.15f,
+               0.0f , 0.611f , 0.0392f,
+               0.45f, -0.055f , -0.25f,
+               0.0f , 0.611f , 0.0392f,
+
+               0.45f , 0.38f,-0.25f,
+               0.0f , 0.611f , 0.0392f,
+               0.45f , 0.38f,0.15f,
+               0.0f , 0.611f , 0.0392f,
+               0.45f, -0.055f , 0.15f,
+               0.0f , 0.611f , 0.0392f,
+               0.45f, -0.055f , 0.15f,
+               0.0f , 0.611f , 0.0392f,
+               0.45f, -0.055f , -0.25f,
+               0.0f , 0.611f , 0.0392f,
+               0.45f , 0.38f,-0.25f,
                0.0f , 0.611f , 0.0392f,
 
                //upper chest
-               0.25f , 0.38f , 0.0f,
+               0.25f , 0.38f , 0.15f,
                255f/255f, 204f/255f, 115f/255f,
-               0.09f , 0.38f, 0.0f,
+               0.09f , 0.38f, 0.15f,
                255f/255f, 204f/255f, 115f/255f,
-               0.09f,0.29f,0.0f,
+               0.09f,0.29f,0.15f,
                255f/255f, 204f/255f, 115f/255f,
-               0.09f,0.29f,0.0f,
+               0.09f,0.29f,0.15f,
                255f/255f, 204f/255f, 115f/255f,
-               0.25f,0.29f,0.0f,
+               0.25f,0.29f,0.15f,
                255f/255f, 204f/255f, 115f/255f,
-               0.25f , 0.38f , 0.0f,
+               0.25f , 0.38f , 0.15f,
                255f/255f, 204f/255f, 115f/255f,
 
-               //top
+               0.25f , 0.38f , -0.25f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.09f , 0.38f, -0.25f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.09f , 0.38f, 0.15f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.09f , 0.38f, 0.15f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.25f , 0.38f , 0.15f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.25f , 0.38f , -0.25f,
+               255f/255f, 204f/255f, 115f/255f,
+
+               0.09f , 0.38f, -0.25f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.09f , 0.38f, 0.15f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.09f,0.29f,0.15f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.09f,0.29f,0.15f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.09f,0.29f,-0.25f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.09f , 0.38f, -0.25f,
+               255f/255f, 204f/255f, 115f/255f,
+
+               0.25f , 0.38f , -0.25f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.09f , 0.38f, -0.25f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.09f,0.29f,-0.25f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.09f,0.29f,-0.25f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.25f , 0.29f , -0.25f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.25f , 0.38f , -0.25f,
+               255f/255f, 204f/255f, 115f/255f,
+
+               0.25f , 0.29f , -0.25f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.09f,0.29f,-0.25f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.09f,0.29f,0.15f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.09f,0.29f,0.15f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.25f,0.29f,0.15f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.25f , 0.29f , -0.25f,
+               255f/255f, 204f/255f, 115f/255f,
+
+               0.25f , 0.38f , -0.25f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.25f , 0.38f , 0.15f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.25f,0.29f,0.15f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.25f,0.29f,0.15f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.25f , 0.29f , -0.25f,
+               255f/255f, 204f/255f, 115f/255f,
+               0.25f , 0.38f , -0.25f,
+               255f/255f, 204f/255f, 115f/255f
+
+
+               /*//top
                0.25f,0.29f,0.0f,
                255f, 255f, 255f,
                0.09f,0.29f,0.0f,
@@ -558,37 +820,61 @@ namespace Graphics
                0.45f, -0.65f,0.0f,
                0.0f,11f/255f,112f/255f,
                0.17f,-0.65f,0.0f,
-               0.0f,11f/255f,112f/255f
+               0.0f,11f/255f,112f/255f*/
+
             };
 
-            
 
-            vertexBufferID = GPU.GenerateBuffer(points);
-           
+            vertexBufferID = GPU.GenerateBuffer(verts);
+
+            //ProjectionMatrix = glm.perspective(FOV, Width / Height, Near, Far);
+            p = glm.perspective(45, 4 / 3.0f, 0.1f, 100);
+            // View matrix 
+            v = glm.lookAt(
+                new vec3(0.5f,0.0f,0.8f),// eye
+                new vec3(0,0,0), // center
+                new vec3(0,1,0)); // up
+            // Model matrix: apply transformations to the model
+            m = new mat4(1);
+            // Our MVP matrix which is a multiplication of our 3 matrices 
+            List<mat4> mvpList = new List<mat4>();
+            mvpList.Add(m);
+            mvpList.Add(v);
+            mvpList.Add(p);
+            mvp = MathHelper.MultiplyMatrices(mvpList);
+
+            sh.UseShader();
+
+
+            //Get a handle for our "MVP" uniform (the holder we created in the vertex shader)
+            MVP_ID = Gl.glGetUniformLocation(sh.ID, "MVP");
+            //pass the value of the MVP you just filled to the vertex shader
+            Gl.glUniformMatrix4fv(MVP_ID, 1, Gl.GL_FALSE, mvp.to_array());
         }
 
         public void Draw()
         {
             Gl.glClear(Gl.GL_COLOR_BUFFER_BIT);
             sh.UseShader();
-            
+
             Gl.glEnableVertexAttribArray(0);
             Gl.glEnableVertexAttribArray(1);
 
             Gl.glVertexAttribPointer(0, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, IntPtr.Zero);
             Gl.glVertexAttribPointer(1, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, (IntPtr)(sizeof(float) * 3));
-            
-            //right arm
-            Gl.glDrawArrays(Gl.GL_TRIANGLES, 0 , 6);
-            Gl.glDrawArrays(Gl.GL_TRIANGLES, 6 , 6);
 
-            //right shirt
-            Gl.glDrawArrays(Gl.GL_TRIANGLES, 12 , 6);
 
             //upper chest
-            Gl.glDrawArrays(Gl.GL_TRIANGLES, 18 , 6);
+            Gl.glDrawArrays(Gl.GL_TRIANGLES, 108, 36);
+            //right shirt
+            Gl.glDrawArrays(Gl.GL_TRIANGLES, 72, 36);
+            //right arm
+            Gl.glDrawArrays(Gl.GL_TRIANGLES, 0, 36);
+            Gl.glDrawArrays(Gl.GL_TRIANGLES, 36, 36);
 
-            //Top
+         
+
+            /*//Top
             Gl.glDrawArrays(Gl.GL_TRIANGLES, 24, 6);
 
             //Left Shirt
@@ -611,7 +897,7 @@ namespace Graphics
             Gl.glDrawArrays(Gl.GL_TRIANGLE_FAN, 100, 46);
 
             //eyes
-            Gl.glPointSize(10);
+            Gl.glPointSize(5);
             Gl.glDrawArrays(Gl.GL_POINTS, 146, 2);
 
             //mouth
@@ -627,23 +913,22 @@ namespace Graphics
             Gl.glDrawArrays(Gl.GL_TRIANGLES, 166, 6);
 
             //left jeans leg
-            Gl.glDrawArrays(Gl.GL_TRIANGLES, 172 , 6);
+            Gl.glDrawArrays(Gl.GL_TRIANGLES, 172, 6);
 
             //right foot
-            Gl.glDrawArrays(Gl.GL_TRIANGLES, 178 , 6);
+            Gl.glDrawArrays(Gl.GL_TRIANGLES, 178, 6);
 
             //left foot
             Gl.glDrawArrays(Gl.GL_TRIANGLES, 184, 6);
 
             //Lines
-            Gl.glDrawArrays(Gl.GL_LINES, 190 , 54);
+            Gl.glDrawArrays(Gl.GL_LINES, 190, 54);*/
 
             Gl.glDisableVertexAttribArray(1);
             Gl.glDisableVertexAttribArray(0);
         }
         public void Update()
         {
-
         }
         public void CleanUp()
         {

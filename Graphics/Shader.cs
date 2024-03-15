@@ -11,6 +11,13 @@ namespace Graphics
     class Shader
     {
         int ProgramID;
+        public int ID
+        {
+            get
+            {
+                return ProgramID;
+            }
+        }
         public Shader(string vertex_shader_file_path, string fragment_shader_file_path)
         {
             ProgramID = LoadShaders(vertex_shader_file_path, fragment_shader_file_path);
