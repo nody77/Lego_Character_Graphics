@@ -80,3 +80,17 @@ F:\Year 3 2nd term\Computer Graphics\Labs\Lab 3\3D drawing - Complete\Graphics\o
 F:\Year 3 2nd term\Computer Graphics\Labs\Lab 3\3D drawing - Complete\Graphics\obj\Debug\Graphics.csproj.Up2Date
 F:\Year 3 2nd term\Computer Graphics\Labs\Lab 3\3D drawing - Complete\Graphics\obj\Debug\Graphics.exe
 F:\Year 3 2nd term\Computer Graphics\Labs\Lab 3\3D drawing - Complete\Graphics\obj\Debug\Graphics.pdb
+F:\Year 3 2nd term\Computer Graphics\Assignment\Graphics-project\Graphics\bin\Debug\Graphics.exe.config
+F:\Year 3 2nd term\Computer Graphics\Assignment\Graphics-project\Graphics\bin\Debug\Graphics.exe
+F:\Year 3 2nd term\Computer Graphics\Assignment\Graphics-project\Graphics\bin\Debug\Graphics.pdb
+F:\Year 3 2nd term\Computer Graphics\Assignment\Graphics-project\Graphics\bin\Debug\GlmNet.dll
+F:\Year 3 2nd term\Computer Graphics\Assignment\Graphics-project\Graphics\bin\Debug\GlmNet.pdb
+F:\Year 3 2nd term\Computer Graphics\Assignment\Graphics-project\Graphics\bin\Debug\GlmNet.xml
+F:\Year 3 2nd term\Computer Graphics\Assignment\Graphics-project\Graphics\obj\Debug\Graphics.csproj.AssemblyReference.cache
+F:\Year 3 2nd term\Computer Graphics\Assignment\Graphics-project\Graphics\obj\Debug\Graphics.GraphicsForm.resources
+F:\Year 3 2nd term\Computer Graphics\Assignment\Graphics-project\Graphics\obj\Debug\Graphics.Properties.Resources.resources
+F:\Year 3 2nd term\Computer Graphics\Assignment\Graphics-project\Graphics\obj\Debug\Graphics.csproj.GenerateResource.cache
+F:\Year 3 2nd term\Computer Graphics\Assignment\Graphics-project\Graphics\obj\Debug\Graphics.csproj.CoreCompileInputs.cache
+F:\Year 3 2nd term\Computer Graphics\Assignment\Graphics-project\Graphics\obj\Debug\Graphics.csproj.Up2Date
+F:\Year 3 2nd term\Computer Graphics\Assignment\Graphics-project\Graphics\obj\Debug\Graphics.exe
+F:\Year 3 2nd term\Computer Graphics\Assignment\Graphics-project\Graphics\obj\Debug\Graphics.pdb
