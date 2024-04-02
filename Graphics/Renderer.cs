@@ -10,6 +10,7 @@ using GlmNet;
 
 
 using System.IO;
+using System.Windows.Forms;
 
 namespace Graphics
 {
@@ -1286,16 +1287,193 @@ namespace Graphics
                0.40f,-0.65f,-0.25f,
                139f/255f,0.0f,0.0f,
 
-               //lines of jeans
+               //lines
+               0.17f,-0.17f,0.15f,
+               25f/255f,25f/255f,112f/255f,
+               0.17f,-0.65f,0.15f,
+               25f/255f,25f/255f,112f/255f,
 
-               //lines of shirt
+               0.45f,-0.055f,0.15f,
+               64f/255f,64f/255f,64f/255f,
+               0.45f,-0.17f,0.15f,
+               64f/255f,64f/255f,64f/255f,
 
-               //lines of hair
+               0.31f,-0.055f,0.15f,
+               64f/255f,64f/255f,64f/255f,
+               0.31f,-0.17f,0.15f,
+               64f/255f,64f/255f,64f/255f,
 
-               //lines of shoes
+               0.17f,-0.055f,0.15f,
+               64f/255f,64f/255f,64f/255f,
+               0.17f,-0.17f,0.15f,
+               64f/255f,64f/255f,64f/255f,
 
-               //lines of arms
+               0.03f,-0.055f,0.15f,
+               64f/255f,64f/255f,64f/255f,
+               0.03f,-0.17f,0.15f,
+               64f/255f,64f/255f,64f/255f,
 
+               -0.11f,-0.055f,0.15f,
+               64f/255f,64f/255f,64f/255f,
+               -0.11f,-0.17f,0.15f,
+               64f/255f,64f/255f,64f/255f,
+
+               0.40f,-0.75f,0.15f,
+               77f/255f,0.0f,0.0f,
+               0.40f,-0.75f,-0.25f,
+               77f/255f,0.0f,0.0f,
+
+               0.45f, -0.055f , -0.25f,
+               64f/255f,64f/255f,64f/255f,
+               0.45f,-0.17f,-0.25f,
+               64f/255f,64f/255f,64f/255f,
+
+               0.45f,-0.17f,0.15f,
+               64f/255f,64f/255f,64f/255f,
+               0.45f,-0.17f,0.0f,
+               64f/255f,64f/255f,64f/255f,
+
+               0.45f, -0.055f , 0.15f,
+               64f/255f,64f/255f,64f/255f,
+               0.45f, -0.055f , 0.0f,
+               64f/255f,64f/255f,64f/255f,
+
+               //Lines Strip
+
+               //right shoes lines
+               0.40f,-0.65f,0.15f,
+               77f/255f,0.0f,0.0f,
+               0.40f,-0.75f,0.15f,
+               77f/255f,0.0f,0.0f,
+               0.22f,-0.75f,0.15f,
+               77f/255f,0.0f,0.0f,
+               0.22f,-0.65f,0.15f,
+               77f/255f,0.0f,0.0f,
+
+               //left shoes lines
+               0.10f,-0.65f,0.15f,
+               77f/255f,0.0f,0.0f,
+               0.10f,-0.75f,0.15f,
+               77f/255f,0.0f,0.0f,
+               -0.07f,-0.75f,0.15f,
+               77f/255f,0.0f,0.0f,
+               -0.07f,-0.65f,0.15f,
+               77f/255f,0.0f,0.0f,
+
+               //left jeans lines
+               0.17f,-0.17f,0.15f,
+               25f/255f,25f/255f,112f/255f,
+               -0.11f,-0.17f,0.15f,
+               25f/255f,25f/255f,112f/255f,
+               -0.11f,-0.65f,0.15f,
+               25f/255f,25f/255f,112f/255f,
+               0.17f,-0.65f,0.15f,
+               25f/255f,25f/255f,112f/255f,
+
+               //right jeans lines
+               0.17f,-0.17f,0.15f,
+               25f/255f,25f/255f,112f/255f,
+               0.45f,-0.17f,0.15f,
+               25f/255f,25f/255f,112f/255f,
+               0.45f, -0.65f,0.15f,
+               25f/255f,25f/255f,112f/255f,
+               0.17f,-0.65f,0.15f,
+               25f/255f,25f/255f,112f/255f,
+
+               //right side of the right jeans leg lines
+               0.45f,-0.17f,-0.25f,
+               25f/255f,25f/255f,112f/255f,
+               0.45f, -0.65f,-0.25f,
+               25f/255f,25f/255f,112f/255f,
+               0.45f, -0.65f,0.15f,
+               25f/255f,25f/255f,112f/255f,
+
+               //left shirt lines  //line loop
+               0.09f,0.38f,0.15f,
+               0.0f,100f/255f,7f/255f,
+               -0.11f , 0.38f , 0.15f,
+               0.0f,100f/255f,7f/255f,
+               -0.11f , -0.055f , 0.15f,
+               0.0f,100f/255f,7f/255f,
+               0.09f,-0.055f,0.15f,
+               0.0f,100f/255f,7f/255f,
+
+               //right shirt lines  //line loop
+               0.45f , 0.38f,0.15f,
+               0.0f,100f/255f,7f/255f,
+               0.25f , 0.38f , 0.15f,
+               0.0f,100f/255f,7f/255f,
+               0.25f, -0.055f , 0.15f,
+               0.0f,100f/255f,7f/255f,
+               0.45f, -0.055f , 0.15f,
+               0.0f,100f/255f,7f/255f,
+
+               //right side of the right shirt lines
+               0.45f , 0.38f,0.15f,
+               0.0f,100f/255f,7f/255f,
+               0.45f , 0.38f,-0.25f,
+               0.0f,100f/255f,7f/255f,
+               0.45f, -0.055f , -0.25f,
+               0.0f,100f/255f,7f/255f,
+
+               //front face of the right shirt arm //line loop
+               0.54f , 0.29f , 0.0f,
+               0.0f,100f/255f,7f/255f,
+               0.45f , 0.29f , 0.0f,
+               0.0f,100f/255f,7f/255f,
+               0.45f , 0.06f , 0.0f,
+               0.0f,100f/255f,7f/255f,
+               0.54f , 0.06f , 0.0f,
+               0.0f,100f/255f,7f/255f,
+
+               //right side of the right arm of the shirt
+               0.54f , 0.29f , 0.0f,
+               0.0f,100f/255f,7f/255f,
+               0.54f , 0.29f , -0.1f,
+               0.0f,100f/255f,7f/255f,
+               0.54f , 0.06f , -0.1f,
+               0.0f,100f/255f,7f/255f,
+               0.54f , 0.06f , 0.0f,
+               0.0f,100f/255f,7f/255f,
+
+               //front face of the right hand //line loop
+               0.54f,0.06f,0.0f,
+               242f/255f,192f/255f,106f/255f,
+               0.45f,0.06f,0.0f,
+               242f/255f,192f/255f,106f/255f,
+               0.45f,-0.17f,0.0f,
+               242f/255f,192f/255f,106f/255f,
+               0.54f,-0.17f,0.0f,
+               242f/255f,192f/255f,106f/255f,
+
+               //right face of the right hand
+               0.54f,0.06f,0.0f,
+               242f/255f,192f/255f,106f/255f,
+               0.54f,0.06f,-0.1f,
+               242f/255f,192f/255f,106f/255f,
+               0.54f,-0.17f,-0.1f,
+               242f/255f,192f/255f,106f/255f,
+               0.54f,-0.17f,0.0f,
+               242f/255f,192f/255f,106f/255f,
+
+               //front face of the head 
+               0.0f,0.38f,0.15f,
+               242f/255f,192f/255f,106f/255f,
+               0.0f,0.82f,0.15f,
+               242f/255f,192f/255f,106f/255f,
+               0.35f,0.82f,0.15f,
+               242f/255f,192f/255f,106f/255f,
+               0.35f,0.38f,0.15f,
+               242f/255f,192f/255f,106f/255f,
+
+               //right face of the head
+               0.35f,0.82f,0.15f,
+               242f/255f,192f/255f,106f/255f,
+               0.35f,0.82f,-0.25f,
+               242f/255f,192f/255f,106f/255f,
+               0.35f,0.38f,-0.25f,
+               242f/255f,192f/255f,106f/255f
+               
             };
 
 
@@ -1346,15 +1524,15 @@ namespace Graphics
             //Left arm
             Gl.glDrawArrays(Gl.GL_TRIANGLES, 216, 36);
             Gl.glDrawArrays(Gl.GL_TRIANGLES, 252, 36);
-
-            //belt
-            Gl.glDrawArrays(Gl.GL_TRIANGLES, 389, 36);
-
+            
             //left jeans leg
             Gl.glDrawArrays(Gl.GL_TRIANGLES, 425, 36);
 
             //right jeans leg
             Gl.glDrawArrays(Gl.GL_TRIANGLES, 461, 36);
+
+            //belt
+            Gl.glDrawArrays(Gl.GL_TRIANGLES, 389, 36);
 
             //Left Shirt
             Gl.glDrawArrays(Gl.GL_TRIANGLES, 180, 36);
@@ -1385,8 +1563,32 @@ namespace Graphics
             Gl.glDrawArrays(Gl.GL_TRIANGLES, 0, 36);
             Gl.glDrawArrays(Gl.GL_TRIANGLES, 36, 36);
 
-            /*Gl.glDrawArrays(Gl.GL_LINES, 0, 36);
-            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 36, 36);*/
+            Gl.glLineWidth(2);
+
+            Gl.glDrawArrays(Gl.GL_LINES, 569, 20);
+            
+            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 589, 4);
+            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 593, 4);
+            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 597, 4);
+            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 601, 4);
+            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 605, 3);
+
+            Gl.glDrawArrays(Gl.GL_LINE_LOOP, 608, 4);
+            Gl.glDrawArrays(Gl.GL_LINE_LOOP, 612, 4);
+
+            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 616, 3);
+
+            Gl.glDrawArrays(Gl.GL_LINE_LOOP, 619, 4);
+
+            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 623, 4);
+
+            Gl.glDrawArrays(Gl.GL_LINE_LOOP, 627, 4);
+
+            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 631, 4);
+
+            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 635, 4);
+
+            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 639, 3);
 
             Gl.glDisableVertexAttribArray(1);
             Gl.glDisableVertexAttribArray(0);
