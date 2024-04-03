@@ -11,26 +11,69 @@ using GlmNet;
 
 using System.IO;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace Graphics
 {
     class Renderer
     {
         Shader sh;
-        uint vertexBufferID;
+
+        uint vertexBufferID_right_hand_of_shirt;
+        uint vertexBufferID_right_hand;
+        uint vertexBufferID_right_shirt;
+        uint vertexBufferID_upper_chest;
+        uint vertexBufferID_top;
+        uint vertexBufferID_left_shirt;
+        uint vertexBufferID_left_hand_of_shirt;
+        uint vertexBufferID_left_hand;
+        uint vertexBufferID_head_and_hair;
+        uint vertexBufferID_face;
+        uint vertexBufferID_belt;
+        uint vertexBufferID_left_jeans_leg;
+        uint vertexBufferID_right_jeans_leg;
+        uint vertexBufferID_left_foot;
+        uint vertexBufferID_right_foot;
+        uint vertexBufferID_outlines;
+
+        uint Texture;
+
 
         //3D Drawing
-        mat4 m;
-        mat4 v;
-        mat4 p;
-        mat4 mvp;
-        int MVP_ID;
+        mat4 model_matrix;
+        mat4 view_matrix;
+        mat4 projection_matrix;
+
+        int Shader_Model_Matrix_ID;
+        int Shader_View_Matrix_ID;
+        int Shader_Projection_Matrix_ID;
+
+        //Self Rotation Animation
+        const float rotationSpeed = -0.01f;
+        float rotation_angle = 0f;
+
+        //Keyboard Animation
+        public float translationX = 0f, translationY = 0f, translationZ = 0f;
+
+        //Textures
+        Texture jeans_texture;
+        Texture shoes_texture;
+        Texture jacket_texture;
+
         public void Initialize()
         {
+
             string projectPath = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
+
             sh = new Shader(projectPath + "\\Shaders\\SimpleVertexShader.vertexshader", projectPath + "\\Shaders\\SimpleFragmentShader.fragmentshader");
+
+            //jeans_texture = new Texture(projectPath + "\\Textures\\jeans.jpg", 1);
+            //shoes_texture = new Texture(projectPath + "\\Textures\\shoes.jpg", 2);
+            //jacket_texture = new Texture(projectPath + "\\Textures\\jacket.webp", 3);
+
             Gl.glClearColor(0.5f, 0.87f, 0.91f, 1);
-            float[] verts =
+
+            float[] right_hand_of_shirt =
             { 
 		       //right hand of shirt
                0.54f , 0.29f , 0.0f,
@@ -109,9 +152,12 @@ namespace Graphics
                0.54f , 0.06f , -0.1f,
                0.0f , 0.611f , 0.0392f,
                0.54f , 0.29f , -0.1f,
-               0.0f , 0.611f , 0.0392f,
+               0.0f , 0.611f , 0.0392f
 
-               //right hand
+            };
+
+            float[] right_hand =
+            { //right hand
                0.54f,0.06f,0.0f,
                255f/255f, 204f/255f, 115f/255f,
                0.45f,0.06f,0.0f,
@@ -188,9 +234,10 @@ namespace Graphics
                0.54f,-0.17f,-0.1f,
                255f/255f, 204f/255f, 115f/255f,
                0.54f,0.06f,-0.1f,
-               255f/255f, 204f/255f, 115f/255f,
-
-               //right shirt
+               255f/255f, 204f/255f, 115f/255f
+            };
+            float[] right_shirt =
+            { //right shirt
                0.45f , 0.38f,0.15f,
                0.0f , 0.611f , 0.0392f,
                0.25f , 0.38f , 0.15f,
@@ -267,8 +314,10 @@ namespace Graphics
                0.45f, -0.055f , -0.25f,
                0.0f , 0.611f , 0.0392f,
                0.45f , 0.38f,-0.25f,
-               0.0f , 0.611f , 0.0392f,
-
+               0.0f , 0.611f , 0.0392f
+            };
+            float[] upper_chest =
+            {
                //upper chest
                0.25f , 0.38f , 0.15f,
                255f/255f, 204f/255f, 115f/255f,
@@ -346,88 +395,92 @@ namespace Graphics
                0.25f , 0.29f , -0.25f,
                255f/255f, 204f/255f, 115f/255f,
                0.25f , 0.38f , -0.25f,
-               255f/255f, 204f/255f, 115f/255f,
+               255f/255f, 204f/255f, 115f/255f
+            };
+            float[] top =
+            { 
+                //top
+                0.25f,0.29f,0.15f,
+                255f, 255f, 255f,
+                0.09f,0.29f,0.15f,
+                255f, 255f, 255f,
+                0.09f, -0.055f , 0.15f,
+                255f, 255f, 255f,
+                0.09f, -0.055f , 0.15f,
+                255f, 255f, 255f,
+                0.25f,-0.055f,0.15f,
+                255f, 255f, 255f,
+                0.25f,0.29f,0.15f,
+                255f, 255f, 255f,
 
+                0.25f,0.29f,-0.25f,
+                255f, 255f, 255f,
+                0.09f,0.29f,-0.25f,
+                255f, 255f, 255f,
+                0.09f,0.29f,0.15f,
+                255f, 255f, 255f,
+                0.09f,0.29f,0.15f,
+                255f, 255f, 255f,
+                0.25f,0.29f,0.15f,
+                255f, 255f, 255f,
+                0.25f,0.29f,-0.25f,
+                255f, 255f, 255f,
 
-               //top
-               0.25f,0.29f,0.15f,
-               255f, 255f, 255f,
-               0.09f,0.29f,0.15f,
-               255f, 255f, 255f,
-               0.09f, -0.055f , 0.15f,
-               255f, 255f, 255f,
-               0.09f, -0.055f , 0.15f,
-               255f, 255f, 255f,
-               0.25f,-0.055f,0.15f,
-               255f, 255f, 255f,
-               0.25f,0.29f,0.15f,
-               255f, 255f, 255f,
+                0.09f,0.29f,-0.25f,
+                255f, 255f, 255f,
+                0.09f,0.29f,0.15f,
+                255f, 255f, 255f,
+                0.09f, -0.055f , 0.15f,
+                255f, 255f, 255f,
+                0.09f, -0.055f , 0.15f,
+                255f, 255f, 255f,
+                0.09f, -0.055f , -0.25f,
+                255f, 255f, 255f,
+                0.09f,0.29f,-0.25f,
+                255f, 255f, 255f,
 
-               0.25f,0.29f,-0.25f,
-               255f, 255f, 255f,
-               0.09f,0.29f,-0.25f,
-               255f, 255f, 255f,
-               0.09f,0.29f,0.15f,
-               255f, 255f, 255f,
-               0.09f,0.29f,0.15f,
-               255f, 255f, 255f,
-               0.25f,0.29f,0.15f,
-               255f, 255f, 255f,
-               0.25f,0.29f,-0.25f,
-               255f, 255f, 255f,
+                0.25f,0.29f,-0.25f,
+                0.0f , 0.611f , 0.0392f,
+                0.09f,0.29f,-0.25f,
+                0.0f , 0.611f , 0.0392f,
+                0.09f, -0.055f , -0.25f,
+                0.0f , 0.611f , 0.0392f,
+                0.09f, -0.055f , -0.25f,
+                0.0f , 0.611f , 0.0392f,
+                0.25f,-0.055f,-0.25f,
+                0.0f , 0.611f , 0.0392f,
+                0.25f,0.29f,-0.25f,
+                0.0f , 0.611f , 0.0392f,
 
-               0.09f,0.29f,-0.25f,
-               255f, 255f, 255f,
-               0.09f,0.29f,0.15f,
-               255f, 255f, 255f,
-               0.09f, -0.055f , 0.15f,
-               255f, 255f, 255f,
-               0.09f, -0.055f , 0.15f,
-               255f, 255f, 255f,
-               0.09f, -0.055f , -0.25f,
-               255f, 255f, 255f,
-               0.09f,0.29f,-0.25f,
-               255f, 255f, 255f,
+                0.25f,-0.055f,-0.25f,
+                255f, 255f, 255f,
+                0.09f, -0.055f , -0.25f,
+                255f, 255f, 255f,
+                0.09f, -0.055f , 0.15f,
+                255f, 255f, 255f,
+                0.09f, -0.055f , 0.15f,
+                255f, 255f, 255f,
+                0.25f,-0.055f,0.15f,
+                255f, 255f, 255f,
+                0.25f,-0.055f,-0.25f,
+                255f, 255f, 255f,
 
-               0.25f,0.29f,-0.25f,
-               0.0f , 0.611f , 0.0392f,
-               0.09f,0.29f,-0.25f,
-               0.0f , 0.611f , 0.0392f,
-               0.09f, -0.055f , -0.25f,
-               0.0f , 0.611f , 0.0392f,
-               0.09f, -0.055f , -0.25f,
-               0.0f , 0.611f , 0.0392f,
-               0.25f,-0.055f,-0.25f,
-               0.0f , 0.611f , 0.0392f,
-               0.25f,0.29f,-0.25f,
-               0.0f , 0.611f , 0.0392f,
+                0.25f,0.29f,-0.25f,
+                255f, 255f, 255f,
+                0.25f,0.29f,0.15f,
+                255f, 255f, 255f,
+                0.25f,-0.055f,0.15f,
+                255f, 255f, 255f,
+                0.25f,-0.055f,0.15f,
+                255f, 255f, 255f,
+                0.25f,-0.055f,-0.25f,
+                255f, 255f, 255f,
+                0.25f,0.29f,-0.25f,
+                255f, 255f, 255f
 
-               0.25f,-0.055f,-0.25f,
-               255f, 255f, 255f,
-               0.09f, -0.055f , -0.25f,
-               255f, 255f, 255f,
-               0.09f, -0.055f , 0.15f,
-               255f, 255f, 255f,
-               0.09f, -0.055f , 0.15f,
-               255f, 255f, 255f,
-               0.25f,-0.055f,0.15f,
-               255f, 255f, 255f,
-               0.25f,-0.055f,-0.25f,
-               255f, 255f, 255f,
-
-               0.25f,0.29f,-0.25f,
-               255f, 255f, 255f,
-               0.25f,0.29f,0.15f,
-               255f, 255f, 255f,
-               0.25f,-0.055f,0.15f,
-               255f, 255f, 255f,
-               0.25f,-0.055f,0.15f,
-               255f, 255f, 255f,
-               0.25f,-0.055f,-0.25f,
-               255f, 255f, 255f,
-               0.25f,0.29f,-0.25f,
-               255f, 255f, 255f,
-
+            };
+            float[] left_shirt =
+            {
                //Left Shirt
                0.09f,0.38f,0.15f,
                0.0f , 0.611f , 0.0392f,
@@ -505,8 +558,10 @@ namespace Graphics
                0.09f,-0.055f,-0.25f,
                0.0f , 0.611f , 0.0392f,
                0.09f,0.38f,-0.25f,
-               0.0f , 0.611f , 0.0392f,
-
+               0.0f , 0.611f , 0.0392f
+            };
+            float[] left_hand_of_shirt =
+            {
                //left hand of shirt
                -0.11f,0.29f,0.0f,
                0.0f , 0.611f , 0.0392f,
@@ -584,8 +639,10 @@ namespace Graphics
                -0.11f,0.06f,-0.1f,
                0.0f , 0.611f , 0.0392f,
                -0.11f,0.29f,-0.1f,
-               0.0f , 0.611f , 0.0392f,
-
+               0.0f , 0.611f , 0.0392f
+            };
+            float[] left_hand =
+            {
                //left hand
                -0.11f, 0.06f, 0.0f,
                255f/255f, 204f/255f, 115f/255f,
@@ -663,8 +720,10 @@ namespace Graphics
                -0.11f,-0.17f,-0.1f,
                255f/255f, 204f/255f, 115f/255f,
                -0.11f,0.06f,-0.1f,
-               255f/255f, 204f/255f, 115f/255f,
-
+               255f/255f, 204f/255f, 115f/255f
+            };
+            float[] head_and_hair =
+            {
                //head
                0.35f,0.38f,-0.25f,
                255f/255f, 204f/255f, 115f/255f,
@@ -743,7 +802,143 @@ namespace Graphics
                255f/255f, 204f/255f, 115f/255f,
                0.35f,0.82f,-0.25f,
                255f/255f, 204f/255f, 115f/255f,
+               
+                //hair
+                0.35f,0.82f,-0.25f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.0f,0.82f,-0.25f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.0f,0.82f,0.15f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.0f,0.82f,0.15f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.35f,0.82f,0.15f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.35f,0.82f,-0.25f,
+                139f/255f, 69f/255f, 19f/255f,
 
+                0.0f,0.82f,0.15f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.1f,0.9f,0.15f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.150f,0.82f,0.15f,
+                139f/255f, 69f/255f, 19f/255f,
+
+                0.0f,0.82f,-0.25f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.1f,0.9f,-0.25f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.150f,0.82f,-0.25f,
+                139f/255f, 69f/255f, 19f/255f,
+
+                0.1f,0.9f,0.15f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.1f,0.9f,-0.25f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.150f,0.82f,-0.25f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.150f,0.82f,-0.25f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.150f,0.82f,0.15f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.1f,0.9f,0.15f,
+                139f/255f, 69f/255f, 19f/255f,
+
+                0.1f,0.9f,-0.25f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.1f,0.9f,0.15f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.0f,0.82f,0.15f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.0f,0.82f,0.15f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.0f,0.82f,-0.25f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.1f,0.9f,-0.25f,
+                139f/255f, 69f/255f, 19f/255f,
+
+                0.150f,0.82f,0.15f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.200f,0.9f,0.15f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.250f,0.82f,0.15f,
+                139f/255f, 69f/255f, 19f/255f,
+
+                0.150f,0.82f,-0.25f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.200f,0.9f,-0.25f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.250f,0.82f,-0.25f,
+                139f/255f, 69f/255f, 19f/255f,
+
+                0.200f,0.9f,0.15f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.200f,0.9f,-0.25f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.150f,0.82f,-0.25f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.150f,0.82f,-0.25f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.150f,0.82f,0.15f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.200f,0.9f,0.15f,
+                139f/255f, 69f/255f, 19f/255f,
+
+                0.200f,0.9f,-0.25f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.200f,0.9f,0.15f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.250f,0.82f,0.15f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.250f,0.82f,0.15f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.250f,0.82f,-0.25f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.200f,0.9f,-0.25f,
+                139f/255f, 69f/255f, 19f/255f,
+
+                0.250f,0.82f,0.15f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.300f,0.9f,0.15f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.35f,0.82f,0.15f,
+                139f/255f, 69f/255f, 19f/255f,
+
+                0.250f,0.82f,-0.25f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.300f,0.9f,-0.25f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.35f,0.82f,-0.25f,
+                139f/255f, 69f/255f, 19f/255f,
+
+                0.300f,0.9f,0.15f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.300f,0.9f,-0.25f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.250f,0.82f,-0.25f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.250f,0.82f,-0.25f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.250f,0.82f,0.15f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.300f,0.9f,0.15f,
+                139f/255f, 69f/255f, 19f/255f,
+
+                0.300f,0.9f,-0.25f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.300f,0.9f,0.15f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.35f,0.82f,0.15f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.35f,0.82f,0.15f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.35f,0.82f,-0.25f,
+                139f/255f, 69f/255f, 19f/255f,
+                0.300f,0.9f,-0.25f,
+                139f/255f, 69f/255f, 19f/255f
+            };
+            float[] face =
+            {
                //eyes
                0.09f , 0.65f, 0.15f,
                0.0f , 0.0f , 0.0f,
@@ -756,142 +951,10 @@ namespace Graphics
                0.175f,0.45f,0.15f,
                0.0f,0.0f,0.0f,
                0.25f , 0.50f , 0.15f,
-               0.0f , 0.0f , 0.0f,
-
-               //hair
-               0.35f,0.82f,-0.25f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.0f,0.82f,-0.25f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.0f,0.82f,0.15f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.0f,0.82f,0.15f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.35f,0.82f,0.15f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.35f,0.82f,-0.25f,
-               139f/255f, 69f/255f, 19f/255f,
-
-               0.0f,0.82f,0.15f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.1f,0.9f,0.15f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.150f,0.82f,0.15f,
-               139f/255f, 69f/255f, 19f/255f,
-
-               0.0f,0.82f,-0.25f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.1f,0.9f,-0.25f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.150f,0.82f,-0.25f,
-               139f/255f, 69f/255f, 19f/255f,
-
-               0.1f,0.9f,0.15f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.1f,0.9f,-0.25f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.150f,0.82f,-0.25f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.150f,0.82f,-0.25f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.150f,0.82f,0.15f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.1f,0.9f,0.15f,
-               139f/255f, 69f/255f, 19f/255f,
-
-               0.1f,0.9f,-0.25f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.1f,0.9f,0.15f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.0f,0.82f,0.15f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.0f,0.82f,0.15f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.0f,0.82f,-0.25f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.1f,0.9f,-0.25f,
-               139f/255f, 69f/255f, 19f/255f,
-
-               0.150f,0.82f,0.15f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.200f,0.9f,0.15f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.250f,0.82f,0.15f,
-               139f/255f, 69f/255f, 19f/255f,
-
-               0.150f,0.82f,-0.25f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.200f,0.9f,-0.25f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.250f,0.82f,-0.25f,
-               139f/255f, 69f/255f, 19f/255f,
-
-               0.200f,0.9f,0.15f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.200f,0.9f,-0.25f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.150f,0.82f,-0.25f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.150f,0.82f,-0.25f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.150f,0.82f,0.15f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.200f,0.9f,0.15f,
-               139f/255f, 69f/255f, 19f/255f,
-
-               0.200f,0.9f,-0.25f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.200f,0.9f,0.15f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.250f,0.82f,0.15f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.250f,0.82f,0.15f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.250f,0.82f,-0.25f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.200f,0.9f,-0.25f,
-               139f/255f, 69f/255f, 19f/255f,
-
-               0.250f,0.82f,0.15f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.300f,0.9f,0.15f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.35f,0.82f,0.15f,
-               139f/255f, 69f/255f, 19f/255f,
-
-               0.250f,0.82f,-0.25f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.300f,0.9f,-0.25f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.35f,0.82f,-0.25f,
-               139f/255f, 69f/255f, 19f/255f,
-
-               0.300f,0.9f,0.15f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.300f,0.9f,-0.25f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.250f,0.82f,-0.25f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.250f,0.82f,-0.25f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.250f,0.82f,0.15f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.300f,0.9f,0.15f,
-               139f/255f, 69f/255f, 19f/255f,
-
-               0.300f,0.9f,-0.25f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.300f,0.9f,0.15f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.35f,0.82f,0.15f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.35f,0.82f,0.15f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.35f,0.82f,-0.25f,
-               139f/255f, 69f/255f, 19f/255f,
-               0.300f,0.9f,-0.25f,
-               139f/255f, 69f/255f, 19f/255f,
-
+               0.0f , 0.0f , 0.0f
+            };
+            float[] belt =
+            {
                //belt
                0.45f, -0.055f , 0.15f,
                128f/255f,128f/255f,128f/255f,
@@ -969,8 +1032,10 @@ namespace Graphics
                0.45f,-0.17f,-0.25f,
                128f/255f,128f/255f,128f/255f,
                0.45f, -0.055f , -0.25f,
-               128f/255f,128f/255f,128f/255f,
-
+               128f/255f,128f/255f,128f/255f
+            };
+            float[] left_jeans_leg =
+            {
                //left jeans leg
                0.17f,-0.17f,0.15f,
                0.0f,0.0f,205f/255f,
@@ -1048,8 +1113,10 @@ namespace Graphics
                0.17f,-0.65f,-0.25f,
                0.0f,0.0f,205f/255f,
                0.17f,-0.17f,-0.25f,
-               0.0f,0.0f,205f/255f,
-
+               0.0f,0.0f,205f/255f
+            };
+            float[] right_jeans_leg =
+            {
                //right jeans leg
                0.45f,-0.17f,0.15f,
                0.0f,0.0f,205f/255f,
@@ -1127,8 +1194,10 @@ namespace Graphics
                0.45f, -0.65f,-0.25f,
                0.0f,0.0f,205f/255f,
                0.45f,-0.17f,-0.25f,
-               0.0f,0.0f,205f/255f,
-
+               0.0f,0.0f,205f/255f
+            };
+            float[] left_foot =
+            {
                //left foot
                0.10f,-0.65f,0.15f,
                139f/255f,0.0f,0.0f,
@@ -1206,8 +1275,10 @@ namespace Graphics
                0.10f,-0.75f,-0.25f,
                139f/255f,0.0f,0.0f,
                0.10f,-0.65f,-0.25f,
-               139f/255f,0.0f,0.0f,
-
+               139f/255f,0.0f,0.0f
+            };
+            float[] right_foot =
+            {
                //right foot
                0.40f,-0.65f,0.15f,
                139f/255f,0.0f,0.0f,
@@ -1285,8 +1356,10 @@ namespace Graphics
                0.40f,-0.75f,-0.25f,
                139f/255f,0.0f,0.0f,
                0.40f,-0.65f,-0.25f,
-               139f/255f,0.0f,0.0f,
-
+               139f/255f,0.0f,0.0f
+            };
+            float[] outlines =
+            { 
                //lines
                0.17f,-0.17f,0.15f,
                25f/255f,25f/255f,112f/255f,
@@ -1473,129 +1546,248 @@ namespace Graphics
                242f/255f,192f/255f,106f/255f,
                0.35f,0.38f,-0.25f,
                242f/255f,192f/255f,106f/255f
-               
             };
 
-
-            vertexBufferID = GPU.GenerateBuffer(verts);
+            vertexBufferID_right_hand_of_shirt = GPU.GenerateBuffer(right_hand_of_shirt);
+            vertexBufferID_right_hand = GPU.GenerateBuffer(right_hand);
+            vertexBufferID_right_shirt = GPU.GenerateBuffer(right_shirt);
+            vertexBufferID_upper_chest = GPU.GenerateBuffer(upper_chest);
+            vertexBufferID_top = GPU.GenerateBuffer(top);
+            vertexBufferID_left_shirt = GPU.GenerateBuffer(left_shirt);
+            vertexBufferID_left_hand_of_shirt = GPU.GenerateBuffer(left_hand_of_shirt);
+            vertexBufferID_left_hand = GPU.GenerateBuffer(left_hand);
+            vertexBufferID_head_and_hair = GPU.GenerateBuffer(head_and_hair);
+            vertexBufferID_face = GPU.GenerateBuffer(face);
+            vertexBufferID_belt = GPU.GenerateBuffer(belt);
+            vertexBufferID_left_jeans_leg = GPU.GenerateBuffer(left_jeans_leg);
+            vertexBufferID_right_jeans_leg = GPU.GenerateBuffer(right_jeans_leg);
+            vertexBufferID_left_foot = GPU.GenerateBuffer(left_foot);
+            vertexBufferID_right_foot = GPU.GenerateBuffer(right_foot);
+            vertexBufferID_outlines = GPU.GenerateBuffer(outlines);
 
             //ProjectionMatrix = glm.perspective(FOV, Width / Height, Near, Far);
-            p = glm.perspective(45, 4 / 3.0f, 0.1f, 100);
+            projection_matrix = glm.perspective(45, 4 / 3.0f, 0.1f, 100);
+
             // View matrix 
-            v = glm.lookAt(
-                new vec3(1.0f,0.0f,0.8f),// eye
-                new vec3(0,0,0), // center
-                new vec3(0,1,0)); // up
+            view_matrix = glm.lookAt(
+                new vec3(1.5f, 0.0f, 1f),// eye
+                new vec3(0, 0, 0), // center
+                new vec3(0, 1, 0)); // up vector
+
             // Model matrix: apply transformations to the model
-            m = new mat4(1);
-            // Our MVP matrix which is a multiplication of our 3 matrices 
-            List<mat4> mvpList = new List<mat4>();
-            mvpList.Add(m);
-            mvpList.Add(v);
-            mvpList.Add(p);
-            mvp = MathHelper.MultiplyMatrices(mvpList);
+            model_matrix = new mat4(1);
 
             sh.UseShader();
 
+            Shader_Model_Matrix_ID = Gl.glGetUniformLocation(sh.ID, "model_matrix");
+            Shader_View_Matrix_ID = Gl.glGetUniformLocation(sh.ID, "view_matrix");
+            Shader_Projection_Matrix_ID = Gl.glGetUniformLocation(sh.ID, "projection_matrix");
 
-            //Get a handle for our "MVP" uniform (the holder we created in the vertex shader)
-            MVP_ID = Gl.glGetUniformLocation(sh.ID, "MVP");
-            //pass the value of the MVP you just filled to the vertex shader
-            Gl.glUniformMatrix4fv(MVP_ID, 1, Gl.GL_FALSE, mvp.to_array());
+
+            Gl.glUniformMatrix4fv(Shader_View_Matrix_ID, 1, Gl.GL_FALSE, view_matrix.to_array());
+            Gl.glUniformMatrix4fv(Shader_Projection_Matrix_ID, 1, Gl.GL_FALSE, projection_matrix.to_array());
+
+            Gl.glEnable(Gl.GL_DEPTH_TEST);
         }
 
         public void Draw()
         {
-            Gl.glClear(Gl.GL_COLOR_BUFFER_BIT);
+            Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
+
             sh.UseShader();
 
+            //left foot
+            Gl.glBindBuffer(Gl.GL_ARRAY_BUFFER, vertexBufferID_left_foot);
             Gl.glEnableVertexAttribArray(0);
             Gl.glEnableVertexAttribArray(1);
-
             Gl.glVertexAttribPointer(0, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, IntPtr.Zero);
             Gl.glVertexAttribPointer(1, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, (IntPtr)(sizeof(float) * 3));
 
-            //left foot
-            Gl.glDrawArrays(Gl.GL_TRIANGLES, 497, 36);
+            Gl.glUniformMatrix4fv(Shader_Model_Matrix_ID, 1, Gl.GL_FALSE, model_matrix.to_array());
+
+            Gl.glDrawArrays(Gl.GL_TRIANGLES, 0, 36);
+            Gl.glDisableVertexAttribArray(1);
+            Gl.glDisableVertexAttribArray(0);
 
             //right foot
-            Gl.glDrawArrays(Gl.GL_TRIANGLES, 533, 36);
+            Gl.glBindBuffer(Gl.GL_ARRAY_BUFFER, vertexBufferID_right_foot);
+            Gl.glEnableVertexAttribArray(0);
+            Gl.glEnableVertexAttribArray(1);
+            Gl.glVertexAttribPointer(0, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, IntPtr.Zero);
+            Gl.glVertexAttribPointer(1, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, (IntPtr)(sizeof(float) * 3));
+            Gl.glDrawArrays(Gl.GL_TRIANGLES, 0, 36);
+            Gl.glDisableVertexAttribArray(1);
+            Gl.glDisableVertexAttribArray(0);
 
-            //Left arm
-            Gl.glDrawArrays(Gl.GL_TRIANGLES, 216, 36);
-            Gl.glDrawArrays(Gl.GL_TRIANGLES, 252, 36);
-            
+            //Left hand
+            Gl.glBindBuffer(Gl.GL_ARRAY_BUFFER, vertexBufferID_left_hand);
+            Gl.glEnableVertexAttribArray(0);
+            Gl.glEnableVertexAttribArray(1);
+            Gl.glVertexAttribPointer(0, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, IntPtr.Zero);
+            Gl.glVertexAttribPointer(1, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, (IntPtr)(sizeof(float) * 3));
+            Gl.glDrawArrays(Gl.GL_TRIANGLES, 0, 36);
+            Gl.glDisableVertexAttribArray(1);
+            Gl.glDisableVertexAttribArray(0);
+
+            //left hand of the shirt
+            Gl.glBindBuffer(Gl.GL_ARRAY_BUFFER, vertexBufferID_left_hand_of_shirt);
+            Gl.glEnableVertexAttribArray(0);
+            Gl.glEnableVertexAttribArray(1);
+            Gl.glVertexAttribPointer(0, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, IntPtr.Zero);
+            Gl.glVertexAttribPointer(1, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, (IntPtr)(sizeof(float) * 3));
+            Gl.glDrawArrays(Gl.GL_TRIANGLES, 0, 36);
+            Gl.glDisableVertexAttribArray(1);
+            Gl.glDisableVertexAttribArray(0);
+
             //left jeans leg
-            Gl.glDrawArrays(Gl.GL_TRIANGLES, 425, 36);
+            Gl.glBindBuffer(Gl.GL_ARRAY_BUFFER, vertexBufferID_left_jeans_leg);
+            Gl.glEnableVertexAttribArray(0);
+            Gl.glEnableVertexAttribArray(1);
+            Gl.glVertexAttribPointer(0, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, IntPtr.Zero);
+            Gl.glVertexAttribPointer(1, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, (IntPtr)(sizeof(float) * 3));
+            Gl.glDrawArrays(Gl.GL_TRIANGLES, 0, 36);
+            Gl.glDisableVertexAttribArray(1);
+            Gl.glDisableVertexAttribArray(0);
 
             //right jeans leg
-            Gl.glDrawArrays(Gl.GL_TRIANGLES, 461, 36);
+            Gl.glBindBuffer(Gl.GL_ARRAY_BUFFER, vertexBufferID_right_jeans_leg);
+            Gl.glEnableVertexAttribArray(0);
+            Gl.glEnableVertexAttribArray(1);
+            Gl.glVertexAttribPointer(0, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, IntPtr.Zero);
+            Gl.glVertexAttribPointer(1, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, (IntPtr)(sizeof(float) * 3));
+            Gl.glDrawArrays(Gl.GL_TRIANGLES, 0, 36);
+            Gl.glDisableVertexAttribArray(1);
+            Gl.glDisableVertexAttribArray(0);
 
             //belt
-            Gl.glDrawArrays(Gl.GL_TRIANGLES, 389, 36);
+            Gl.glBindBuffer(Gl.GL_ARRAY_BUFFER, vertexBufferID_belt);
+            Gl.glEnableVertexAttribArray(0);
+            Gl.glEnableVertexAttribArray(1);
+            Gl.glVertexAttribPointer(0, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, IntPtr.Zero);
+            Gl.glVertexAttribPointer(1, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, (IntPtr)(sizeof(float) * 3));
+            Gl.glDrawArrays(Gl.GL_TRIANGLES, 0, 36);
+            Gl.glDisableVertexAttribArray(1);
+            Gl.glDisableVertexAttribArray(0);
 
             //Left Shirt
-            Gl.glDrawArrays(Gl.GL_TRIANGLES, 180, 36);
+            Gl.glBindBuffer(Gl.GL_ARRAY_BUFFER, vertexBufferID_left_shirt);
+            Gl.glEnableVertexAttribArray(0);
+            Gl.glEnableVertexAttribArray(1);
+            Gl.glVertexAttribPointer(0, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, IntPtr.Zero);
+            Gl.glVertexAttribPointer(1, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, (IntPtr)(sizeof(float) * 3));
+            Gl.glDrawArrays(Gl.GL_TRIANGLES, 0, 36);
+            Gl.glDisableVertexAttribArray(1);
+            Gl.glDisableVertexAttribArray(0);
 
             //upper chest
-            Gl.glDrawArrays(Gl.GL_TRIANGLES, 108, 36);
+            Gl.glBindBuffer(Gl.GL_ARRAY_BUFFER, vertexBufferID_upper_chest);
+            Gl.glEnableVertexAttribArray(0);
+            Gl.glEnableVertexAttribArray(1);
+            Gl.glVertexAttribPointer(0, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, IntPtr.Zero);
+            Gl.glVertexAttribPointer(1, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, (IntPtr)(sizeof(float) * 3));
+            Gl.glDrawArrays(Gl.GL_TRIANGLES, 0, 36);
+            Gl.glDisableVertexAttribArray(1);
+            Gl.glDisableVertexAttribArray(0);
 
+            //head and hair
+            Gl.glBindBuffer(Gl.GL_ARRAY_BUFFER, vertexBufferID_head_and_hair);
+            Gl.glEnableVertexAttribArray(0);
+            Gl.glEnableVertexAttribArray(1);
+            Gl.glVertexAttribPointer(0, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, IntPtr.Zero);
+            Gl.glVertexAttribPointer(1, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, (IntPtr)(sizeof(float) * 3));
             //hair
-            Gl.glDrawArrays(Gl.GL_TRIANGLES, 329, 60);
-
+            Gl.glDrawArrays(Gl.GL_TRIANGLES, 36, 60);
             //head
-            Gl.glDrawArrays(Gl.GL_TRIANGLES, 288, 36);
+            Gl.glDrawArrays(Gl.GL_TRIANGLES, 0, 36);
+            Gl.glDisableVertexAttribArray(1);
+            Gl.glDisableVertexAttribArray(0);
 
+            //face
+            Gl.glBindBuffer(Gl.GL_ARRAY_BUFFER, vertexBufferID_face);
+            Gl.glEnableVertexAttribArray(0);
+            Gl.glEnableVertexAttribArray(1);
+            Gl.glVertexAttribPointer(0, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, IntPtr.Zero);
+            Gl.glVertexAttribPointer(1, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, (IntPtr)(sizeof(float) * 3));
             //eyes
             Gl.glPointSize(5);
-            Gl.glDrawArrays(Gl.GL_POINTS, 324, 2);
-
+            Gl.glDrawArrays(Gl.GL_POINTS, 0, 2);
             //mouth
-            Gl.glDrawArrays(Gl.GL_LINE_LOOP, 326, 3);
+            Gl.glDrawArrays(Gl.GL_LINE_LOOP, 2, 3);
+            Gl.glDisableVertexAttribArray(1);
+            Gl.glDisableVertexAttribArray(0);
 
             //Top
-            Gl.glDrawArrays(Gl.GL_TRIANGLES, 144, 36);
+            Gl.glBindBuffer(Gl.GL_ARRAY_BUFFER, vertexBufferID_top);
+            Gl.glEnableVertexAttribArray(0);
+            Gl.glEnableVertexAttribArray(1);
+            Gl.glVertexAttribPointer(0, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, IntPtr.Zero);
+            Gl.glVertexAttribPointer(1, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, (IntPtr)(sizeof(float) * 3));
+            Gl.glDrawArrays(Gl.GL_TRIANGLES, 0, 36);
+            Gl.glDisableVertexAttribArray(1);
+            Gl.glDisableVertexAttribArray(0);
 
             //right shirt
-            Gl.glDrawArrays(Gl.GL_TRIANGLES, 72, 36);
-
-            //right arm
+            Gl.glBindBuffer(Gl.GL_ARRAY_BUFFER, vertexBufferID_right_shirt);
+            Gl.glEnableVertexAttribArray(0);
+            Gl.glEnableVertexAttribArray(1);
+            Gl.glVertexAttribPointer(0, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, IntPtr.Zero);
+            Gl.glVertexAttribPointer(1, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, (IntPtr)(sizeof(float) * 3));
             Gl.glDrawArrays(Gl.GL_TRIANGLES, 0, 36);
-            Gl.glDrawArrays(Gl.GL_TRIANGLES, 36, 36);
+            Gl.glDisableVertexAttribArray(1);
+            Gl.glDisableVertexAttribArray(0);
 
+            //right hand
+            Gl.glBindBuffer(Gl.GL_ARRAY_BUFFER, vertexBufferID_right_hand);
+            Gl.glEnableVertexAttribArray(0);
+            Gl.glEnableVertexAttribArray(1);
+            Gl.glVertexAttribPointer(0, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, IntPtr.Zero);
+            Gl.glVertexAttribPointer(1, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, (IntPtr)(sizeof(float) * 3));
+            Gl.glDrawArrays(Gl.GL_TRIANGLES, 0, 36);
+            Gl.glDisableVertexAttribArray(1);
+            Gl.glDisableVertexAttribArray(0);
+
+            //right hand of the shirt
+            Gl.glBindBuffer(Gl.GL_ARRAY_BUFFER, vertexBufferID_right_hand_of_shirt);
+            Gl.glEnableVertexAttribArray(0);
+            Gl.glEnableVertexAttribArray(1);
+            Gl.glVertexAttribPointer(0, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, IntPtr.Zero);
+            Gl.glVertexAttribPointer(1, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, (IntPtr)(sizeof(float) * 3));
+            Gl.glDrawArrays(Gl.GL_TRIANGLES, 0, 36);
+            Gl.glDisableVertexAttribArray(1);
+            Gl.glDisableVertexAttribArray(0);
+
+            //Outlines
+            Gl.glBindBuffer(Gl.GL_ARRAY_BUFFER, vertexBufferID_outlines);
+            Gl.glEnableVertexAttribArray(0);
+            Gl.glEnableVertexAttribArray(1);
+            Gl.glVertexAttribPointer(0, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, IntPtr.Zero);
+            Gl.glVertexAttribPointer(1, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, (IntPtr)(sizeof(float) * 3));
             Gl.glLineWidth(2);
-
-            Gl.glDrawArrays(Gl.GL_LINES, 569, 20);
-            
-            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 589, 4);
-            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 593, 4);
-            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 597, 4);
-            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 601, 4);
-            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 605, 3);
-
-            Gl.glDrawArrays(Gl.GL_LINE_LOOP, 608, 4);
-            Gl.glDrawArrays(Gl.GL_LINE_LOOP, 612, 4);
-
-            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 616, 3);
-
-            Gl.glDrawArrays(Gl.GL_LINE_LOOP, 619, 4);
-
-            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 623, 4);
-
-            Gl.glDrawArrays(Gl.GL_LINE_LOOP, 627, 4);
-
-            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 631, 4);
-
-            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 635, 4);
-
-            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 639, 3);
-
+            Gl.glDrawArrays(Gl.GL_LINES, 0, 20);
+            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 20, 4);
+            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 24, 4);
+            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 28, 4);
+            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 32, 4);
+            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 36, 3);
+            Gl.glDrawArrays(Gl.GL_LINE_LOOP, 39, 4);
+            Gl.glDrawArrays(Gl.GL_LINE_LOOP, 43, 4);
+            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 47, 3);
+            Gl.glDrawArrays(Gl.GL_LINE_LOOP, 50, 4);
+            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 54, 4);
+            Gl.glDrawArrays(Gl.GL_LINE_LOOP, 58, 4);
+            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 62, 4);
+            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 66, 4);
+            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 70, 3);
             Gl.glDisableVertexAttribArray(1);
             Gl.glDisableVertexAttribArray(0);
         }
         public void Update()
         {
-
+            rotation_angle += rotationSpeed;
+            List<mat4> transformations = new List<mat4>();
+            transformations.Add(glm.rotate(rotation_angle, new vec3(0, 1, 0)));
+            transformations.Add(glm.translate(new mat4(1), new vec3(translationX, translationY, translationZ)));
+            model_matrix = MathHelper.MultiplyMatrices(transformations);
         }
         public void CleanUp()
         {

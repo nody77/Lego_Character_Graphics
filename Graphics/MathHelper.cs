@@ -12,6 +12,7 @@ namespace Graphics
         public static mat4 MultiplyMatrices(List<mat4> matrices)
         {
             mat4 res = new mat4(1);
+
             for (int i = 0; i < matrices.Count; i++)
             {
                 res = Multiply(matrices[i],res);
