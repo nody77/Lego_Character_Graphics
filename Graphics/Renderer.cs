@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+    Nada Ahmed Fathalla Mohammed
+    2021170580
+    CS
+    Section 7
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -36,8 +43,6 @@ namespace Graphics
         uint vertexBufferID_right_foot;
         uint vertexBufferID_outlines;
 
-        uint Texture;
-
 
         //3D Drawing
         mat4 model_matrix;
@@ -56,9 +61,10 @@ namespace Graphics
         public float translationX = 0f, translationY = 0f, translationZ = 0f;
 
         //Textures
+        int Shader_Texture_Flag_ID;
+        int flag_texture = 0;
         Texture jeans_texture;
-        Texture shoes_texture;
-        Texture jacket_texture;
+        
 
         public void Initialize()
         {
@@ -66,175 +72,171 @@ namespace Graphics
             string projectPath = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
 
             sh = new Shader(projectPath + "\\Shaders\\SimpleVertexShader.vertexshader", projectPath + "\\Shaders\\SimpleFragmentShader.fragmentshader");
-
-            //jeans_texture = new Texture(projectPath + "\\Textures\\jeans.jpg", 1);
-            //shoes_texture = new Texture(projectPath + "\\Textures\\shoes.jpg", 2);
-            //jacket_texture = new Texture(projectPath + "\\Textures\\jacket.webp", 3);
+            
+            jeans_texture = new Texture(projectPath + "\\Texture\\jeans.jpg", 0);
 
             Gl.glClearColor(0.5f, 0.87f, 0.91f, 1);
 
             float[] right_hand_of_shirt =
             { 
-		       //right hand of shirt
-               0.54f , 0.29f , 0.0f,
-               0.0f , 0.611f , 0.0392f,
-               0.45f , 0.29f , 0.0f,
-               0.0f , 0.611f , 0.0392f,
-               0.45f , 0.06f , 0.0f,
-               0.0f , 0.611f , 0.0392f,
-               0.45f , 0.06f , 0.0f,
-               0.0f , 0.611f , 0.0392f,
-               0.54f , 0.06f , 0.0f,
-               0.0f , 0.611f , 0.0392f,
-               0.54f , 0.29f , 0.0f,
-               0.0f , 0.611f , 0.0392f,
+		        //right hand of shirt
+                0.54f , 0.29f , 0.0f,
+                0.0f , 0.611f , 0.0392f,
+                0.45f , 0.29f , 0.0f,
+                0.0f , 0.611f , 0.0392f,
+                0.45f , 0.06f , 0.0f,
+                0.0f , 0.611f , 0.0392f,
+                0.45f , 0.06f , 0.0f,
+                0.0f , 0.611f , 0.0392f,
+                0.54f , 0.06f , 0.0f,
+                0.0f , 0.611f , 0.0392f,
+                0.54f , 0.29f , 0.0f,
+                0.0f , 0.611f , 0.0392f,
 
-               0.54f , 0.29f , -0.1f,
-               0.0f , 0.611f , 0.0392f,
-               0.45f , 0.29f , -0.1f,
-               0.0f , 0.611f , 0.0392f,
-               0.45f , 0.29f , 0.0f,
-               0.0f , 0.611f , 0.0392f,
-               0.45f , 0.29f , 0.0f,
-               0.0f , 0.611f , 0.0392f,
-               0.54f , 0.29f , 0.0f,
-               0.0f , 0.611f , 0.0392f,
-               0.54f , 0.29f , -0.1f,
-               0.0f , 0.611f , 0.0392f,
+                0.54f , 0.29f , -0.1f,
+                0.0f , 0.611f , 0.0392f,
+                0.45f , 0.29f , -0.1f,
+                0.0f , 0.611f , 0.0392f,
+                0.45f , 0.29f , 0.0f,
+                0.0f , 0.611f , 0.0392f,
+                0.45f , 0.29f , 0.0f,
+                0.0f , 0.611f , 0.0392f,
+                0.54f , 0.29f , 0.0f,
+                0.0f , 0.611f , 0.0392f,
+                0.54f , 0.29f , -0.1f,
+                0.0f , 0.611f , 0.0392f,
 
-               0.45f , 0.29f , -0.1f,
-               0.0f , 0.611f , 0.0392f,
-               0.45f , 0.29f , 0.0f,
-               0.0f , 0.611f , 0.0392f,
-               0.45f , 0.06f , 0.0f,
-               0.0f , 0.611f , 0.0392f,
-               0.45f , 0.06f , 0.0f,
-               0.0f , 0.611f , 0.0392f,
-               0.45f , 0.06f , -0.1f,
-               0.0f , 0.611f , 0.0392f,
-               0.45f , 0.29f , -0.1f,
-               0.0f , 0.611f , 0.0392f,
+                0.45f , 0.29f , -0.1f,
+                0.0f , 0.611f , 0.0392f,
+                0.45f , 0.29f , 0.0f,
+                0.0f , 0.611f , 0.0392f,
+                0.45f , 0.06f , 0.0f,
+                0.0f , 0.611f , 0.0392f,
+                0.45f , 0.06f , 0.0f,
+                0.0f , 0.611f , 0.0392f,
+                0.45f , 0.06f , -0.1f,
+                0.0f , 0.611f , 0.0392f,
+                0.45f , 0.29f , -0.1f,
+                0.0f , 0.611f , 0.0392f,
 
-               0.54f , 0.06f , -0.1f,
-               0.0f , 0.611f , 0.0392f,
-               0.45f , 0.06f , -0.1f,
-               0.0f , 0.611f , 0.0392f,
-               0.45f , 0.06f , 0.0f,
-               0.0f , 0.611f , 0.0392f,
-               0.45f , 0.06f , 0.0f,
-               0.0f , 0.611f , 0.0392f,
-               0.54f , 0.06f , 0.0f,
-               0.0f , 0.611f , 0.0392f,
-               0.54f , 0.06f , -0.1f,
-               0.0f , 0.611f , 0.0392f,
+                0.54f , 0.06f , -0.1f,
+                0.0f , 0.611f , 0.0392f,
+                0.45f , 0.06f , -0.1f,
+                0.0f , 0.611f , 0.0392f,
+                0.45f , 0.06f , 0.0f,
+                0.0f , 0.611f , 0.0392f,
+                0.45f , 0.06f , 0.0f,
+                0.0f , 0.611f , 0.0392f,
+                0.54f , 0.06f , 0.0f,
+                0.0f , 0.611f , 0.0392f,
+                0.54f , 0.06f , -0.1f,
+                0.0f , 0.611f , 0.0392f,
 
-               0.54f , 0.29f , -0.1f,
-               0.0f , 0.611f , 0.0392f,
-               0.45f , 0.29f , -0.1f,
-               0.0f , 0.611f , 0.0392f,
-               0.45f , 0.06f , -0.1f,
-               0.0f , 0.611f , 0.0392f,
-               0.45f , 0.06f , -0.1f,
-               0.0f , 0.611f , 0.0392f,
-               0.54f , 0.06f , -0.1f,
-               0.0f , 0.611f , 0.0392f,
-               0.54f , 0.29f , -0.1f,
-               0.0f , 0.611f , 0.0392f,
+                0.54f , 0.29f , -0.1f,
+                0.0f , 0.611f , 0.0392f,
+                0.45f , 0.29f , -0.1f,
+                0.0f , 0.611f , 0.0392f,
+                0.45f , 0.06f , -0.1f,
+                0.0f , 0.611f , 0.0392f,
+                0.45f , 0.06f , -0.1f,
+                0.0f , 0.611f , 0.0392f,
+                0.54f , 0.06f , -0.1f,
+                0.0f , 0.611f , 0.0392f,
+                0.54f , 0.29f , -0.1f,
+                0.0f , 0.611f , 0.0392f,
 
-               0.54f , 0.29f , -0.1f,
-               0.0f , 0.611f , 0.0392f,
-               0.54f , 0.29f , 0.0f,
-               0.0f , 0.611f , 0.0392f,
-               0.54f , 0.06f , 0.0f,
-               0.0f , 0.611f , 0.0392f,
-               0.54f , 0.06f , 0.0f,
-               0.0f , 0.611f , 0.0392f,
-               0.54f , 0.06f , -0.1f,
-               0.0f , 0.611f , 0.0392f,
-               0.54f , 0.29f , -0.1f,
-               0.0f , 0.611f , 0.0392f
-
+                0.54f , 0.29f , -0.1f,
+                0.0f , 0.611f , 0.0392f,
+                0.54f , 0.29f , 0.0f,
+                0.0f , 0.611f , 0.0392f,
+                0.54f , 0.06f , 0.0f,
+                0.0f , 0.611f , 0.0392f,
+                0.54f , 0.06f , 0.0f,
+                0.0f , 0.611f , 0.0392f,
+                0.54f , 0.06f , -0.1f,
+                0.0f , 0.611f , 0.0392f,
+                0.54f , 0.29f , -0.1f,
+                0.0f , 0.611f , 0.0392f
             };
-
             float[] right_hand =
             { //right hand
-               0.54f,0.06f,0.0f,
-               255f/255f, 204f/255f, 115f/255f,
-               0.45f,0.06f,0.0f,
-               255f/255f, 204f/255f, 115f/255f,
-               0.54f,-0.17f,0.0f,
-               255f/255f, 204f/255f, 115f/255f,
-               0.45f,-0.17f,0.0f,
-               255f/255f, 204f/255f, 115f/255f,
-               0.54f,-0.17f,0.0f,
-               255f/255f, 204f/255f, 115f/255f,
-               0.45f,0.06f,0.0f,
-               255f/255f, 204f/255f, 115f/255f,
+                0.54f,0.06f,0.0f,
+                255f/255f, 204f/255f, 115f/255f,
+                0.45f,0.06f,0.0f,
+                255f/255f, 204f/255f, 115f/255f,
+                0.54f,-0.17f,0.0f,
+                255f/255f, 204f/255f, 115f/255f,
+                0.45f,-0.17f,0.0f,
+                255f/255f, 204f/255f, 115f/255f,
+                0.54f,-0.17f,0.0f,
+                255f/255f, 204f/255f, 115f/255f,
+                0.45f,0.06f,0.0f,
+                255f/255f, 204f/255f, 115f/255f,
 
-               0.54f,0.06f,-0.1f,
-               255f/255f, 204f/255f, 115f/255f,
-               0.45f,0.06f,-0.1f,
-               255f/255f, 204f/255f, 115f/255f,
-               0.45f,0.06f,0.0f,
-               255f/255f, 204f/255f, 115f/255f,
-               0.45f,0.06f,0.0f,
-               255f/255f, 204f/255f, 115f/255f,
-               0.54f,0.06f,0.0f,
-               255f/255f, 204f/255f, 115f/255f,
-               0.54f,0.06f,-0.1f,
-               255f/255f, 204f/255f, 115f/255f,
+                0.54f,0.06f,-0.1f,
+                255f/255f, 204f/255f, 115f/255f,
+                0.45f,0.06f,-0.1f,
+                255f/255f, 204f/255f, 115f/255f,
+                0.45f,0.06f,0.0f,
+                255f/255f, 204f/255f, 115f/255f,
+                0.45f,0.06f,0.0f,
+                255f/255f, 204f/255f, 115f/255f,
+                0.54f,0.06f,0.0f,
+                255f/255f, 204f/255f, 115f/255f,
+                0.54f,0.06f,-0.1f,
+                255f/255f, 204f/255f, 115f/255f,
 
-               0.45f,0.06f,-0.1f,
-               255f/255f, 204f/255f, 115f/255f,
-               0.45f,0.06f,0.0f,
-               255f/255f, 204f/255f, 115f/255f,
-               0.54f,-0.17f,0.0f,
-               255f/255f, 204f/255f, 115f/255f,
-               0.54f,-0.17f,0.0f,
-               255f/255f, 204f/255f, 115f/255f,
-               0.54f,-0.17f,-0.1f,
-               255f/255f, 204f/255f, 115f/255f,
-               0.45f,0.06f,-0.1f,
-               255f/255f, 204f/255f, 115f/255f,
+                0.45f,0.06f,-0.1f,
+                255f/255f, 204f/255f, 115f/255f,
+                0.45f,0.06f,0.0f,
+                255f/255f, 204f/255f, 115f/255f,
+                0.54f,-0.17f,0.0f,
+                255f/255f, 204f/255f, 115f/255f,
+                0.54f,-0.17f,0.0f,
+                255f/255f, 204f/255f, 115f/255f,
+                0.54f,-0.17f,-0.1f,
+                255f/255f, 204f/255f, 115f/255f,
+                0.45f,0.06f,-0.1f,
+                255f/255f, 204f/255f, 115f/255f,
 
-               0.54f,0.06f,-0.1f,
-               255f/255f, 204f/255f, 115f/255f,
-               0.45f,0.06f,-0.1f,
-               255f/255f, 204f/255f, 115f/255f,
-               0.45f,-0.17f,-0.1f,
-               255f/255f, 204f/255f, 115f/255f,
-               0.45f,-0.17f,-0.1f,
-               255f/255f, 204f/255f, 115f/255f,
-               0.54f,-0.17f,-0.1f,
-               255f/255f, 204f/255f, 115f/255f,
-               0.54f,0.06f,-0.1f,
-               255f/255f, 204f/255f, 115f/255f,
+                0.54f,0.06f,-0.1f,
+                255f/255f, 204f/255f, 115f/255f,
+                0.45f,0.06f,-0.1f,
+                255f/255f, 204f/255f, 115f/255f,
+                0.45f,-0.17f,-0.1f,
+                255f/255f, 204f/255f, 115f/255f,
+                0.45f,-0.17f,-0.1f,
+                255f/255f, 204f/255f, 115f/255f,
+                0.54f,-0.17f,-0.1f,
+                255f/255f, 204f/255f, 115f/255f,
+                0.54f,0.06f,-0.1f,
+                255f/255f, 204f/255f, 115f/255f,
 
-               0.54f,-0.17f,-0.1f,
-               255f/255f, 204f/255f, 115f/255f,
-               0.45f,-0.17f,-0.1f,
-               255f/255f, 204f/255f, 115f/255f,
-               0.45f,-0.17f,0.0f,
-               255f/255f, 204f/255f, 115f/255f,
-               0.45f,-0.17f,0.0f,
-               255f/255f, 204f/255f, 115f/255f,
-               0.54f,-0.17f,0.0f,
-               255f/255f, 204f/255f, 115f/255f,
-               0.54f,-0.17f,-0.1f,
-               255f/255f, 204f/255f, 115f/255f,
+                0.54f,-0.17f,-0.1f,
+                255f/255f, 204f/255f, 115f/255f,
+                0.45f,-0.17f,-0.1f,
+                255f/255f, 204f/255f, 115f/255f,
+                0.45f,-0.17f,0.0f,
+                255f/255f, 204f/255f, 115f/255f,
+                0.45f,-0.17f,0.0f,
+                255f/255f, 204f/255f, 115f/255f,
+                0.54f,-0.17f,0.0f,
+                255f/255f, 204f/255f, 115f/255f,
+                0.54f,-0.17f,-0.1f,
+                255f/255f, 204f/255f, 115f/255f,
 
-               0.54f,0.06f,-0.1f,
-               255f/255f, 204f/255f, 115f/255f,
-               0.54f,0.06f,0.0f,
-               255f/255f, 204f/255f, 115f/255f,
-               0.54f,-0.17f,0.0f,
-               255f/255f, 204f/255f, 115f/255f,
-               0.54f,-0.17f,0.0f,
-               255f/255f, 204f/255f, 115f/255f,
-               0.54f,-0.17f,-0.1f,
-               255f/255f, 204f/255f, 115f/255f,
-               0.54f,0.06f,-0.1f,
-               255f/255f, 204f/255f, 115f/255f
+                0.54f,0.06f,-0.1f,
+                255f/255f, 204f/255f, 115f/255f,
+                0.54f,0.06f,0.0f,
+                255f/255f, 204f/255f, 115f/255f,
+                0.54f,-0.17f,0.0f,
+                255f/255f, 204f/255f, 115f/255f,
+                0.54f,-0.17f,0.0f,
+                255f/255f, 204f/255f, 115f/255f,
+                0.54f,-0.17f,-0.1f,
+                255f/255f, 204f/255f, 115f/255f,
+                0.54f,0.06f,-0.1f,
+                255f/255f, 204f/255f, 115f/255f
             };
             float[] right_shirt =
             { //right shirt
@@ -1039,162 +1041,234 @@ namespace Graphics
                //left jeans leg
                0.17f,-0.17f,0.15f,
                0.0f,0.0f,205f/255f,
+               0,0,
                -0.11f,-0.17f,0.15f,
                0.0f,0.0f,205f/255f,
+               1,0,
                -0.11f,-0.65f,0.15f,
                0.0f,0.0f,205f/255f,
+               1,1,
                -0.11f,-0.65f,0.15f,
                0.0f,0.0f,205f/255f,
+               1,1,
                0.17f,-0.65f,0.15f,
                0.0f,0.0f,205f/255f,
+               0,1,
                0.17f,-0.17f,0.15f,
                0.0f,0.0f,205f/255f,
+               0,0,
 
                0.17f,-0.17f,-0.25f,
                0.0f,0.0f,205f/255f,
+               0,0,
                -0.11f,-0.17f,-0.25f,
                0.0f,0.0f,205f/255f,
+               1,0,
                -0.11f,-0.17f,0.15f,
                0.0f,0.0f,205f/255f,
+               1,1,
                -0.11f,-0.17f,0.15f,
                0.0f,0.0f,205f/255f,
+               1,1,
                0.17f,-0.17f,0.15f,
                0.0f,0.0f,205f/255f,
+               0,1,
                0.17f,-0.17f,-0.25f,
                0.0f,0.0f,205f/255f,
+               0,0,
 
                -0.11f,-0.17f,-0.25f,
                0.0f,0.0f,205f/255f,
+               0,0,
                -0.11f,-0.17f,0.15f,
                0.0f,0.0f,205f/255f,
+               1,0,
                -0.11f,-0.65f,0.15f,
                0.0f,0.0f,205f/255f,
+               1,1,
                -0.11f,-0.65f,0.15f,
                0.0f,0.0f,205f/255f,
+               1,1,
                -0.11f,-0.65f,-0.25f,
                0.0f,0.0f,205f/255f,
+               0,1,
                -0.11f,-0.17f,-0.25f,
                0.0f,0.0f,205f/255f,
+               0,0,
 
                0.17f,-0.17f,-0.25f,
                0.0f,0.0f,205f/255f,
+               0,0,
                -0.11f,-0.17f,-0.25f,
                0.0f,0.0f,205f/255f,
+               1,0,
                -0.11f,-0.65f,-0.25f,
                0.0f,0.0f,205f/255f,
+               1,1,
                -0.11f,-0.65f,-0.25f,
                0.0f,0.0f,205f/255f,
+               1,1,
                0.17f,-0.65f,-0.25f,
                0.0f,0.0f,205f/255f,
+               0,1,
                0.17f,-0.17f,-0.25f,
                0.0f,0.0f,205f/255f,
+               0,0,
 
                0.17f,-0.65f,-0.25f,
                0.0f,0.0f,205f/255f,
+               0,0,
                -0.11f,-0.65f,-0.25f,
                0.0f,0.0f,205f/255f,
+               1,0,
                -0.11f,-0.65f,0.15f,
                0.0f,0.0f,205f/255f,
+               1,1,
                -0.11f,-0.65f,0.15f,
                0.0f,0.0f,205f/255f,
+               1,1,
                0.17f,-0.65f,0.15f,
                0.0f,0.0f,205f/255f,
+               0,1,
                0.17f,-0.65f,-0.25f,
                0.0f,0.0f,205f/255f,
+               0,0,
 
                0.17f,-0.17f,-0.25f,
                0.0f,0.0f,205f/255f,
+               0,0,
                0.17f,-0.17f,0.15f,
                0.0f,0.0f,205f/255f,
+               1,0,
                0.17f,-0.65f,0.15f,
                0.0f,0.0f,205f/255f,
+               1,1,
                0.17f,-0.65f,0.15f,
                0.0f,0.0f,205f/255f,
+               1,1,
                0.17f,-0.65f,-0.25f,
                0.0f,0.0f,205f/255f,
+               0,1,
                0.17f,-0.17f,-0.25f,
-               0.0f,0.0f,205f/255f
+               0.0f,0.0f,205f/255f,
+               0,0
             };
             float[] right_jeans_leg =
             {
                //right jeans leg
                0.45f,-0.17f,0.15f,
                0.0f,0.0f,205f/255f,
+               0,0,
                0.17f,-0.17f,0.15f,
                0.0f,0.0f,205f/255f,
+               1,0,
                0.17f,-0.65f,0.15f,
                0.0f,0.0f,205f/255f,
+               1,1,
                0.17f,-0.65f,0.15f,
                0.0f,0.0f,205f/255f,
+               1,1,
                0.45f, -0.65f,0.15f,
                0.0f,0.0f,205f/255f,
+               0,1,
                0.45f,-0.17f,0.15f,
                0.0f,0.0f,205f/255f,
+               0,0,
 
                0.45f,-0.17f,-0.25f,
                0.0f,0.0f,205f/255f,
+               0,0,
                0.17f,-0.17f,-0.25f,
                0.0f,0.0f,205f/255f,
+               1,0,
                0.17f,-0.17f,0.15f,
                0.0f,0.0f,205f/255f,
+               1,1,
                0.17f,-0.17f,0.15f,
                0.0f,0.0f,205f/255f,
+               1,1,
                0.45f,-0.17f,0.15f,
                0.0f,0.0f,205f/255f,
+               0,1,
                0.45f,-0.17f,-0.25f,
                0.0f,0.0f,205f/255f,
+               0,0,
 
                0.17f,-0.17f,-0.25f,
                0.0f,0.0f,205f/255f,
+               0,0,
                0.17f,-0.17f,0.15f,
                0.0f,0.0f,205f/255f,
+               1,0,
                0.17f,-0.65f,0.15f,
                0.0f,0.0f,205f/255f,
+               1,1,
                0.17f,-0.65f,0.15f,
                0.0f,0.0f,205f/255f,
+               1,1,
                0.17f,-0.65f,-0.25f,
                0.0f,0.0f,205f/255f,
+               0,1,
                0.17f,-0.17f,-0.25f,
                0.0f,0.0f,205f/255f,
+               0,0,
 
                0.45f,-0.17f,-0.25f,
                0.0f,0.0f,205f/255f,
+               0,0,
                0.17f,-0.17f,-0.25f,
                0.0f,0.0f,205f/255f,
+               1,0,
                0.17f,-0.65f,-0.25f,
                0.0f,0.0f,205f/255f,
+               1,1,
                0.17f,-0.65f,-0.25f,
                0.0f,0.0f,205f/255f,
+               1,1,
                0.45f, -0.65f,-0.25f,
                0.0f,0.0f,205f/255f,
+               0,1,
                0.45f,-0.17f,-0.25f,
                0.0f,0.0f,205f/255f,
+               0,0,
 
                0.45f, -0.65f,-0.25f,
                0.0f,0.0f,205f/255f,
+               0,0,
                0.17f,-0.65f,-0.25f,
                0.0f,0.0f,205f/255f,
+               1,0,
                0.17f,-0.65f,0.15f,
                0.0f,0.0f,205f/255f,
+               1,1,
                0.17f,-0.65f,0.15f,
                0.0f,0.0f,205f/255f,
+               1,1,
                0.45f, -0.65f,0.15f,
                0.0f,0.0f,205f/255f,
+               0,1,
                0.45f, -0.65f,-0.25f,
                0.0f,0.0f,205f/255f,
+               0,0,
 
                0.45f,-0.17f,-0.25f,
                0.0f,0.0f,205f/255f,
+               0,0,
                0.45f,-0.17f,0.15f,
                0.0f,0.0f,205f/255f,
+               1,0,
                0.45f, -0.65f,0.15f,
                0.0f,0.0f,205f/255f,
+               1,1,
                0.45f, -0.65f,0.15f,
                0.0f,0.0f,205f/255f,
+               1,1,
                0.45f, -0.65f,-0.25f,
                0.0f,0.0f,205f/255f,
+               0,1,
                0.45f,-0.17f,-0.25f,
-               0.0f,0.0f,205f/255f
+               0.0f,0.0f,205f/255f,
+               0,0
             };
             float[] left_foot =
             {
@@ -1545,7 +1619,59 @@ namespace Graphics
                0.35f,0.82f,-0.25f,
                242f/255f,192f/255f,106f/255f,
                0.35f,0.38f,-0.25f,
-               242f/255f,192f/255f,106f/255f
+               242f/255f,192f/255f,106f/255f,
+
+               //back jeans line
+               0.17f,-0.17f,-0.25f,
+               25f/255f,25f/255f,112f/255f,
+               0.17f,-0.65f,-0.25f,
+               25f/255f,25f/255f,112f/255f,
+
+               //line loop of the back right jeans
+               0.45f,-0.17f,-0.25f,
+               25f/255f,25f/255f,112f/255f,
+               0.17f,-0.17f,-0.25f,
+               25f/255f,25f/255f,112f/255f,
+               0.17f,-0.65f,-0.25f,
+               25f/255f,25f/255f,112f/255f,
+               0.45f, -0.65f,-0.25f,
+               25f/255f,25f/255f,112f/255f,
+
+               //line loop of the back left jeans
+               0.17f,-0.17f,-0.25f,
+               25f/255f,25f/255f,112f/255f,
+               -0.11f,-0.17f,-0.25f,
+               25f/255f,25f/255f,112f/255f,
+               -0.11f,-0.65f,-0.25f,
+               25f/255f,25f/255f,112f/255f,
+               0.17f,-0.65f,-0.25f,
+               25f/255f,25f/255f,112f/255f,
+
+               //line strip of the left face of the left shirt hand
+               -0.2f,0.06f,-0.1f,
+               0.0f,100f/255f,7f/255f,
+               -0.2f,0.29f,-0.1f,
+               0.0f,100f/255f,7f/255f,
+               -0.2f,0.29f,0.0f,
+               0.0f,100f/255f,7f/255f,
+               -0.2f,0.06f,0.0f,
+               0.0f,100f/255f,7f/255f,
+
+               //line strip of the face of the left shirt hand
+               -0.11f,0.06f,0.0f,
+               0.0f,100f/255f,7f/255f,
+               -0.11f,0.29f,0.0f,
+               0.0f,100f/255f,7f/255f,
+               -0.2f,0.29f,0.0f,
+               0.0f,100f/255f,7f/255f,
+               -0.2f,0.06f,0.0f,
+               0.0f,100f/255f,7f/255f,
+
+               //line in the back of the shirt
+               -0.11f , 0.38f , -0.25f,
+               0.0f,100f/255f,7f/255f,
+               -0.11f , -0.055f , -0.25f,
+               0.0f,100f/255f,7f/255f
             };
 
             vertexBufferID_right_hand_of_shirt = GPU.GenerateBuffer(right_hand_of_shirt);
@@ -1582,10 +1708,13 @@ namespace Graphics
             Shader_Model_Matrix_ID = Gl.glGetUniformLocation(sh.ID, "model_matrix");
             Shader_View_Matrix_ID = Gl.glGetUniformLocation(sh.ID, "view_matrix");
             Shader_Projection_Matrix_ID = Gl.glGetUniformLocation(sh.ID, "projection_matrix");
+            Shader_Texture_Flag_ID = Gl.glGetUniformLocation(sh.ID, "flag_texture");
+
 
 
             Gl.glUniformMatrix4fv(Shader_View_Matrix_ID, 1, Gl.GL_FALSE, view_matrix.to_array());
             Gl.glUniformMatrix4fv(Shader_Projection_Matrix_ID, 1, Gl.GL_FALSE, projection_matrix.to_array());
+            Gl.glUniform1i(Shader_Texture_Flag_ID, flag_texture);
 
             Gl.glEnable(Gl.GL_DEPTH_TEST);
         }
@@ -1641,23 +1770,39 @@ namespace Graphics
 
             //left jeans leg
             Gl.glBindBuffer(Gl.GL_ARRAY_BUFFER, vertexBufferID_left_jeans_leg);
+            flag_texture = 1;
+            Gl.glUniform1i(Shader_Texture_Flag_ID, flag_texture);
             Gl.glEnableVertexAttribArray(0);
             Gl.glEnableVertexAttribArray(1);
-            Gl.glVertexAttribPointer(0, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, IntPtr.Zero);
-            Gl.glVertexAttribPointer(1, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, (IntPtr)(sizeof(float) * 3));
+            Gl.glEnableVertexAttribArray(2);
+            Gl.glVertexAttribPointer(0, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 8, IntPtr.Zero);
+            Gl.glVertexAttribPointer(1, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 8, (IntPtr)(sizeof(float) * 3));
+            Gl.glVertexAttribPointer(2, 2, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 8, (IntPtr)(sizeof(float) * 6));
+            jeans_texture.Bind();
             Gl.glDrawArrays(Gl.GL_TRIANGLES, 0, 36);
+            Gl.glDisableVertexAttribArray(2);
             Gl.glDisableVertexAttribArray(1);
             Gl.glDisableVertexAttribArray(0);
+            flag_texture = 0;
+            Gl.glUniform1i(Shader_Texture_Flag_ID, flag_texture);
+
 
             //right jeans leg
             Gl.glBindBuffer(Gl.GL_ARRAY_BUFFER, vertexBufferID_right_jeans_leg);
+            flag_texture = 1;
+            Gl.glUniform1i(Shader_Texture_Flag_ID, flag_texture);
             Gl.glEnableVertexAttribArray(0);
             Gl.glEnableVertexAttribArray(1);
-            Gl.glVertexAttribPointer(0, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, IntPtr.Zero);
-            Gl.glVertexAttribPointer(1, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 6, (IntPtr)(sizeof(float) * 3));
+            Gl.glEnableVertexAttribArray(2);
+            Gl.glVertexAttribPointer(0, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 8, IntPtr.Zero);
+            Gl.glVertexAttribPointer(1, 3, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 8, (IntPtr)(sizeof(float) * 3));
+            Gl.glVertexAttribPointer(2, 2, Gl.GL_FLOAT, Gl.GL_FALSE, sizeof(float) * 8, (IntPtr)(sizeof(float) * 6));
             Gl.glDrawArrays(Gl.GL_TRIANGLES, 0, 36);
+            Gl.glDisableVertexAttribArray(2);
             Gl.glDisableVertexAttribArray(1);
             Gl.glDisableVertexAttribArray(0);
+            flag_texture = 0;
+            Gl.glUniform1i(Shader_Texture_Flag_ID, flag_texture);
 
             //belt
             Gl.glBindBuffer(Gl.GL_ARRAY_BUFFER, vertexBufferID_belt);
@@ -1778,6 +1923,12 @@ namespace Graphics
             Gl.glDrawArrays(Gl.GL_LINE_STRIP, 62, 4);
             Gl.glDrawArrays(Gl.GL_LINE_STRIP, 66, 4);
             Gl.glDrawArrays(Gl.GL_LINE_STRIP, 70, 3);
+            Gl.glDrawArrays(Gl.GL_LINES, 73, 2);
+            Gl.glDrawArrays(Gl.GL_LINE_LOOP, 75, 4);
+            Gl.glDrawArrays(Gl.GL_LINE_LOOP, 79, 4);
+            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 83, 4);
+            Gl.glDrawArrays(Gl.GL_LINE_STRIP, 87, 4);
+            Gl.glDrawArrays(Gl.GL_LINES, 91, 2);
             Gl.glDisableVertexAttribArray(1);
             Gl.glDisableVertexAttribArray(0);
         }
@@ -1788,6 +1939,27 @@ namespace Graphics
             transformations.Add(glm.rotate(rotation_angle, new vec3(0, 1, 0)));
             transformations.Add(glm.translate(new mat4(1), new vec3(translationX, translationY, translationZ)));
             model_matrix = MathHelper.MultiplyMatrices(transformations);
+
+
+            //KeyBoard Animation code that was inside the simpleOpenGlControl1_KeyPress function
+            /*float speed = 0.5f;
+
+            if (e.KeyChar == 'd')
+                renderer.translationX += speed; 
+            if (e.KeyChar == 'a')
+                renderer.translationX -= speed;
+            
+            if (e.KeyChar == 'w')
+                renderer.translationY += speed;
+            if (e.KeyChar == 's')
+                renderer.translationY -= speed;
+
+            if (e.KeyChar == 'z')
+                renderer.translationZ += speed;
+            if (e.KeyChar == 'c')
+                renderer.translationZ -= speed;
+
+            simpleOpenGlControl1.Refresh();*/
         }
         public void CleanUp()
         {

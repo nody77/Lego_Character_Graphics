@@ -2,9 +2,21 @@
 
 // Ouput data
 out vec3 color;
+
 in vec3 pixelcolor;
+in vec2 Tex;
+
+uniform sampler2D myTextureSampler;
+uniform int flag_texture;
+
 void main()
 {
-	color = pixelcolor;
-
+	if(flag_texture == 0)
+	{
+		color = pixelcolor;
+	}
+	else
+	{
+		color = texture(myTextureSampler,Tex).rgb;
+	}
 }
